@@ -134,6 +134,7 @@ def api_generate():
     scan_id = data.get("scan_id", "")
     selected_table_ids = set(data.get("selected_tables", []))
     single_sheet = data.get("single_sheet", False)
+    brand_colors = data.get("brand_colors")
 
     if not cik or not selected_filings:
         return jsonify({"error": "CIK and at least one filing are required"}), 400
@@ -188,6 +189,7 @@ def api_generate():
             selected_tables=selected_tables,
             selected_filings=selected_filings,
             single_sheet=single_sheet,
+            brand_colors=brand_colors,
         )
 
         return send_file(

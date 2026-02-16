@@ -6,6 +6,28 @@ let scannedTables = [];
 let selectedTableIds = new Set();
 let currentScanId = null;
 
+// Company brand color presets
+const COLOR_PRESETS = {
+    "Default":   { primary: "#4472C4", accent: "#D9E1F2" },
+    "Apple":     { primary: "#333333", accent: "#E0E0E0" },
+    "Microsoft": { primary: "#0078D4", accent: "#DEECF9" },
+    "Google":    { primary: "#4285F4", accent: "#D2E3FC" },
+    "Amazon":    { primary: "#FF9900", accent: "#FFF2CC" },
+    "Meta":      { primary: "#0668E1", accent: "#D6E8FF" },
+    "Netflix":   { primary: "#E50914", accent: "#FDDEDE" },
+    "Tesla":     { primary: "#CC0000", accent: "#F5D5D5" },
+    "JPMorgan":  { primary: "#004B87", accent: "#D0E2F0" },
+    "Goldman":   { primary: "#6B9AC4", accent: "#E1ECF5" },
+    "Walmart":   { primary: "#0071CE", accent: "#D6ECFF" },
+    "Disney":    { primary: "#113CCF", accent: "#D4DDFA" },
+    "Nike":      { primary: "#111111", accent: "#E0E0E0" },
+    "Coca-Cola": { primary: "#F40000", accent: "#FDE0E0" },
+    "Nvidia":    { primary: "#76B900", accent: "#E8F5CC" },
+    "Berkshire": { primary: "#2D2D6E", accent: "#D8D8EA" },
+};
+
+let selectedPreset = "Default";
+
 // DOM elements
 const searchInput = document.getElementById("search-input");
 const searchResults = document.getElementById("search-results");
@@ -25,6 +47,10 @@ const btnGenerate = document.getElementById("btn-generate");
 const generateLoading = document.getElementById("generate-loading");
 const generateError = document.getElementById("generate-error");
 const resetSection = document.getElementById("reset-section");
+const colorPrimary = document.getElementById("color-primary");
+const colorAccent = document.getElementById("color-accent");
+const previewPrimary = document.getElementById("preview-primary");
+const previewAccent = document.getElementById("preview-accent");
 
 // Debounce helper
 function debounce(fn, ms) {
@@ -34,6 +60,54 @@ function debounce(fn, ms) {
         timer = setTimeout(() => fn.apply(this, args), ms);
     };
 }
+
+// --- Color Theme ---
+function renderColorPresets() {
+    const container = document.getElementById("color-presets");
+    let html = "";
+    for (const [name, colors] of Object.entries(COLOR_PRESETS)) {
+        const active = name === selectedPreset ? "active" : "";
+        html += `
+            <button class="color-preset ${active}" data-preset="${name}">
+                <div class="color-swatch" style="background:${colors.primary}"></div>
+                ${name}
+            </button>
+        `;
+    }
+    container.innerHTML = html;
+
+    container.querySelectorAll(".color-preset").forEach((btn) => {
+        btn.addEventListener("click", () => {
+            selectedPreset = btn.dataset.preset;
+            const colors = COLOR_PRESETS[selectedPreset];
+            colorPrimary.value = colors.primary;
+            colorAccent.value = colors.accent;
+            updateColorPreview();
+            renderColorPresets();
+        });
+    });
+}
+
+function updateColorPreview() {
+    previewPrimary.style.background = colorPrimary.value;
+    previewAccent.style.background = colorAccent.value;
+}
+
+colorPrimary.addEventListener("input", () => {
+    selectedPreset = null;
+    renderColorPresets();
+    updateColorPreview();
+});
+
+colorAccent.addEventListener("input", () => {
+    selectedPreset = null;
+    renderColorPresets();
+    updateColorPreview();
+});
+
+// Initialize
+renderColorPresets();
+updateColorPreview();
 
 // --- Search ---
 searchInput.addEventListener(
@@ -94,6 +168,19 @@ async function selectCompany({ cik, ticker, name }) {
     selectedCompany = { cik, ticker, name };
     searchResults.classList.add("hidden");
     searchInput.value = `${name} (${ticker})`;
+
+    // Auto-select matching color preset if one exists
+    const matchKey = Object.keys(COLOR_PRESETS).find(
+        (k) => k.toLowerCase() === name.split(" ")[0].toLowerCase() ||
+               k.toLowerCase() === ticker.toLowerCase()
+    );
+    if (matchKey) {
+        selectedPreset = matchKey;
+        colorPrimary.value = COLOR_PRESETS[matchKey].primary;
+        colorAccent.value = COLOR_PRESETS[matchKey].accent;
+        updateColorPreview();
+        renderColorPresets();
+    }
 
     // Show filings step, hide later steps
     stepFilings.classList.remove("hidden");
@@ -374,6 +461,10 @@ btnGenerate.addEventListener("click", async () => {
                 scan_id: currentScanId,
                 selected_tables: Array.from(selectedTableIds),
                 single_sheet: singleSheet,
+                brand_colors: {
+                    primary: colorPrimary.value,
+                    accent: colorAccent.value,
+                },
             }),
         });
 
@@ -408,7 +499,12 @@ document.getElementById("btn-reset").addEventListener("click", () => {
     scannedTables = [];
     selectedTableIds.clear();
     currentScanId = null;
+    selectedPreset = "Default";
     searchInput.value = "";
+    colorPrimary.value = "#4472C4";
+    colorAccent.value = "#D9E1F2";
+    updateColorPreview();
+    renderColorPresets();
     stepFilings.classList.add("hidden");
     stepTables.classList.add("hidden");
     stepGenerate.classList.add("hidden");

@@ -85,7 +85,30 @@
                     <span class="radio-desc">Everything on one sheet, stacked vertically</span>
                 </label>
             </div>
-            <button id="btn-generate" class="btn-primary">Generate & Download Excel</button>
+
+            <!-- Company color theme -->
+            <div class="color-theme-section">
+                <h3>Excel Color Theme</h3>
+                <div class="color-presets" id="color-presets"></div>
+                <div class="custom-colors">
+                    <div class="color-picker-group">
+                        <label>Primary</label>
+                        <input type="color" id="color-primary" value="#4472C4">
+                    </div>
+                    <div class="color-picker-group">
+                        <label>Accent</label>
+                        <input type="color" id="color-accent" value="#D9E1F2">
+                    </div>
+                </div>
+                <div class="color-preview" id="color-preview">
+                    <div class="color-swatch" id="preview-primary"></div>
+                    <span>Title bars</span>
+                    <div class="color-swatch" id="preview-accent"></div>
+                    <span>Headers</span>
+                </div>
+            </div>
+
+            <button id="btn-generate" class="btn-primary" style="margin-top:20px">Generate & Download Excel</button>
             <div id="generate-loading" class="loading hidden">
                 <div class="spinner"></div>
                 <span id="generate-status">Building Excel file...</span>

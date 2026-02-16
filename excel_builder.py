@@ -10,21 +10,38 @@ from openpyxl.styles import Font, Alignment, Border, Side, PatternFill
 from openpyxl.utils import get_column_letter
 
 
-# Styles
-HEADER_FONT = Font(bold=True, size=11)
-TITLE_FONT = Font(bold=True, size=13)
-SUBTITLE_FONT = Font(bold=True, size=11, color="555555")
-HEADER_FILL = PatternFill(start_color="D9E1F2", end_color="D9E1F2", fill_type="solid")
-TITLE_FILL = PatternFill(start_color="4472C4", end_color="4472C4", fill_type="solid")
-TITLE_FONT_WHITE = Font(bold=True, size=13, color="FFFFFF")
+# Default colors (overridden by brand_colors)
+DEFAULT_PRIMARY = "4472C4"
+DEFAULT_ACCENT = "D9E1F2"
+
 THIN_BORDER = Border(
     bottom=Side(style="thin", color="CCCCCC"),
 )
 
-# Accounting format: negative in parens, thousands separator, no decimals for whole numbers
+# Accounting format
 ACCT_FMT = '#,##0_);(#,##0)'
 ACCT_FMT_DEC = '#,##0.00_);(#,##0.00)'
 PCT_FMT = '0.00%'
+
+
+def _hex_to_openpyxl(hex_color):
+    """Convert #RRGGBB to RRGGBB for openpyxl."""
+    return hex_color.lstrip("#").upper()
+
+
+def _make_styles(primary_hex, accent_hex):
+    """Create style objects from brand colors."""
+    primary = _hex_to_openpyxl(primary_hex)
+    accent = _hex_to_openpyxl(accent_hex)
+
+    return {
+        "title_fill": PatternFill(start_color=primary, end_color=primary, fill_type="solid"),
+        "title_font": Font(bold=True, size=13, color="FFFFFF"),
+        "header_fill": PatternFill(start_color=accent, end_color=accent, fill_type="solid"),
+        "header_font": Font(bold=True, size=11),
+        "title_font_plain": Font(bold=True, size=13),
+        "subtitle_font": Font(bold=True, size=11, color="555555"),
+    }
 
 
 def _safe_sheet_name(name, max_len=31):
@@ -61,7 +78,7 @@ def _is_year_like(val):
 
 def _try_parse_number(text):
     """Try to convert text to a number for Excel."""
-    if not text or text in ("—", "–", "-", ""):
+    if not text or text in ("\u2014", "\u2013", "-", ""):
         return None, False
 
     cleaned = text.replace("$", "").replace(",", "").replace(" ", "").strip()
@@ -78,7 +95,7 @@ def _try_parse_number(text):
         val = float(cleaned)
         if is_pct:
             val = val / 100.0
-            return val, True  # True = percentage
+            return val, True
         if val == int(val):
             return int(val), False
         return val, False
@@ -94,7 +111,7 @@ def _format_number_cell(cell, val, is_pct=False):
     if is_pct:
         cell.number_format = PCT_FMT
     elif _is_year_like(val):
-        cell.number_format = '0'  # Plain number, no commas
+        cell.number_format = '0'
     elif isinstance(val, float):
         cell.number_format = ACCT_FMT_DEC
     elif isinstance(val, int):
@@ -113,15 +130,15 @@ def _auto_width(ws, min_width=12, max_width=45):
         ws.column_dimensions[col_letter].width = max_length
 
 
-def _write_title_bar(ws, row, title, num_cols):
-    """Write a blue title bar spanning multiple columns."""
-    ws.cell(row=row, column=1, value=title).font = TITLE_FONT_WHITE
-    ws.cell(row=row, column=1).fill = TITLE_FILL
+def _write_title_bar(ws, row, title, num_cols, styles):
+    """Write a colored title bar spanning multiple columns."""
+    ws.cell(row=row, column=1, value=title).font = styles["title_font"]
+    ws.cell(row=row, column=1).fill = styles["title_fill"]
     for col in range(2, num_cols + 1):
-        ws.cell(row=row, column=col).fill = TITLE_FILL
+        ws.cell(row=row, column=col).fill = styles["title_fill"]
 
 
-def _write_xbrl_statement(ws, statement_name, statement_data, periods, start_row):
+def _write_xbrl_statement(ws, statement_name, statement_data, periods, start_row, styles):
     """Write a single XBRL financial statement. Returns next available row."""
     if not statement_data:
         return start_row
@@ -130,16 +147,16 @@ def _write_xbrl_statement(ws, statement_name, statement_data, periods, start_row
     num_cols = len(periods) + 1
 
     # Title bar
-    _write_title_bar(ws, row, statement_name, num_cols)
+    _write_title_bar(ws, row, statement_name, num_cols, styles)
     row += 1
 
     # Period headers
-    ws.cell(row=row, column=1, value="Line Item").font = HEADER_FONT
-    ws.cell(row=row, column=1).fill = HEADER_FILL
+    ws.cell(row=row, column=1, value="Line Item").font = styles["header_font"]
+    ws.cell(row=row, column=1).fill = styles["header_fill"]
     for i, period in enumerate(periods):
         cell = ws.cell(row=row, column=i + 2, value=period)
-        cell.font = HEADER_FONT
-        cell.fill = HEADER_FILL
+        cell.font = styles["header_font"]
+        cell.fill = styles["header_fill"]
         cell.alignment = Alignment(horizontal="center")
     row += 1
 
@@ -160,7 +177,7 @@ def _write_xbrl_statement(ws, statement_name, statement_data, periods, start_row
     return row
 
 
-def _write_html_table(ws, table_dict, start_row, title_override=None, filing_source=None):
+def _write_html_table(ws, table_dict, start_row, styles, title_override=None, filing_source=None):
     """Write one HTML-extracted table with matching formatting. Returns next available row."""
     row = start_row
     title = title_override or table_dict.get("title") or "Table"
@@ -174,21 +191,21 @@ def _write_html_table(ws, table_dict, start_row, title_override=None, filing_sou
     for dr in data_rows:
         max_cols = max(max_cols, len(dr))
 
-    # Title bar (same blue bar as XBRL sheets)
-    _write_title_bar(ws, row, title, max_cols)
+    # Title bar
+    _write_title_bar(ws, row, title, max_cols, styles)
     row += 1
 
     # Source subtitle if provided
     if filing_source:
-        ws.cell(row=row, column=1, value=f"Source: {filing_source}").font = SUBTITLE_FONT
+        ws.cell(row=row, column=1, value=f"Source: {filing_source}").font = styles["subtitle_font"]
         row += 1
 
     # Headers
     for header_row in headers:
         for col_idx, val in enumerate(header_row):
             cell = ws.cell(row=row, column=col_idx + 1, value=val)
-            cell.font = HEADER_FONT
-            cell.fill = HEADER_FILL
+            cell.font = styles["header_font"]
+            cell.fill = styles["header_fill"]
             cell.alignment = Alignment(horizontal="center")
         row += 1
 
@@ -208,7 +225,8 @@ def _write_html_table(ws, table_dict, start_row, title_override=None, filing_sou
     return row
 
 
-def build_workbook(company_name, ticker, xbrl_data, selected_tables, selected_filings, single_sheet=False):
+def build_workbook(company_name, ticker, xbrl_data, selected_tables, selected_filings,
+                   single_sheet=False, brand_colors=None):
     """Build and save an Excel workbook.
 
     Args:
@@ -218,18 +236,24 @@ def build_workbook(company_name, ticker, xbrl_data, selected_tables, selected_fi
         selected_tables: List of {table, filing_type, filing_date} dicts.
         selected_filings: List of filing dicts {type, date, accession, ...}.
         single_sheet: If True, put everything on one sheet instead of separate tabs.
+        brand_colors: Optional dict with 'primary' and 'accent' hex colors.
 
     Returns:
         (filepath, filename) tuple.
     """
+    # Build styles from brand colors
+    primary = (brand_colors or {}).get("primary", "#" + DEFAULT_PRIMARY)
+    accent = (brand_colors or {}).get("accent", "#" + DEFAULT_ACCENT)
+    styles = _make_styles(primary, accent)
+
     wb = Workbook()
     used_sheet_names = set()
     periods = xbrl_data.get("periods", [])
 
     if single_sheet:
-        _build_single_sheet(wb, company_name, ticker, xbrl_data, selected_tables, selected_filings, periods)
+        _build_single_sheet(wb, company_name, ticker, xbrl_data, selected_tables, selected_filings, periods, styles)
     else:
-        _build_multi_sheet(wb, company_name, ticker, xbrl_data, selected_tables, selected_filings, periods, used_sheet_names)
+        _build_multi_sheet(wb, company_name, ticker, xbrl_data, selected_tables, selected_filings, periods, used_sheet_names, styles)
 
     # Save
     safe_ticker = re.sub(r'[^A-Za-z0-9]', '', ticker or company_name[:10])
@@ -241,22 +265,22 @@ def build_workbook(company_name, ticker, xbrl_data, selected_tables, selected_fi
     return filepath, filename
 
 
-def _build_single_sheet(wb, company_name, ticker, xbrl_data, selected_tables, selected_filings, periods):
+def _build_single_sheet(wb, company_name, ticker, xbrl_data, selected_tables, selected_filings, periods, styles):
     """Put all data on a single sheet, one section after another."""
     ws = wb.active
     ws.title = "All Data"
 
     row = 1
-    ws.cell(row=row, column=1, value=f"{company_name} ({ticker})").font = TITLE_FONT
+    ws.cell(row=row, column=1, value=f"{company_name} ({ticker})").font = styles["title_font_plain"]
     row += 1
-    ws.cell(row=row, column=1, value=f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M')}").font = SUBTITLE_FONT
+    ws.cell(row=row, column=1, value=f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M')}").font = styles["subtitle_font"]
     row += 2
 
     # XBRL statements
     for statement_name in ("Income Statement", "Balance Sheet", "Cash Flow"):
         statement_data = xbrl_data.get(statement_name, {})
         if statement_data:
-            row = _write_xbrl_statement(ws, statement_name, statement_data, periods, start_row=row)
+            row = _write_xbrl_statement(ws, statement_name, statement_data, periods, start_row=row, styles=styles)
             row += 1
 
     # Selected HTML tables
@@ -265,14 +289,14 @@ def _build_single_sheet(wb, company_name, ticker, xbrl_data, selected_tables, se
         filing_type = entry.get("filing_type", "")
         filing_date = entry.get("filing_date", "")
         source = f"{filing_type} ({filing_date})"
-        row = _write_html_table(ws, table, start_row=row, filing_source=source)
+        row = _write_html_table(ws, table, start_row=row, styles=styles, filing_source=source)
         row += 1
 
     ws.freeze_panes = "B1"
     _auto_width(ws)
 
 
-def _build_multi_sheet(wb, company_name, ticker, xbrl_data, selected_tables, selected_filings, periods, used_sheet_names):
+def _build_multi_sheet(wb, company_name, ticker, xbrl_data, selected_tables, selected_filings, periods, used_sheet_names, styles):
     """Separate tabs: Index + core financials + one sheet per selected table."""
 
     # --- Index Sheet ---
@@ -280,15 +304,15 @@ def _build_multi_sheet(wb, company_name, ticker, xbrl_data, selected_tables, sel
     ws_index.title = "Index"
     used_sheet_names.add("Index")
 
-    ws_index.cell(row=1, column=1, value=f"{company_name} ({ticker})").font = TITLE_FONT
-    ws_index.cell(row=2, column=1, value=f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M')}").font = SUBTITLE_FONT
+    ws_index.cell(row=1, column=1, value=f"{company_name} ({ticker})").font = styles["title_font_plain"]
+    ws_index.cell(row=2, column=1, value=f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M')}").font = styles["subtitle_font"]
 
-    ws_index.cell(row=4, column=1, value="Filings Included:").font = HEADER_FONT
+    ws_index.cell(row=4, column=1, value="Filings Included:").font = styles["header_font"]
     row = 5
-    ws_index.cell(row=row, column=1, value="Type").font = HEADER_FONT
-    ws_index.cell(row=row, column=1).fill = HEADER_FILL
-    ws_index.cell(row=row, column=2, value="Date").font = HEADER_FONT
-    ws_index.cell(row=row, column=2).fill = HEADER_FILL
+    ws_index.cell(row=row, column=1, value="Type").font = styles["header_font"]
+    ws_index.cell(row=row, column=1).fill = styles["header_fill"]
+    ws_index.cell(row=row, column=2, value="Date").font = styles["header_font"]
+    ws_index.cell(row=row, column=2).fill = styles["header_fill"]
     row += 1
     for filing in selected_filings:
         ws_index.cell(row=row, column=1, value=filing.get("type", ""))
@@ -297,12 +321,12 @@ def _build_multi_sheet(wb, company_name, ticker, xbrl_data, selected_tables, sel
 
     if selected_tables:
         row += 1
-        ws_index.cell(row=row, column=1, value="Additional Tables Included:").font = HEADER_FONT
+        ws_index.cell(row=row, column=1, value="Additional Tables Included:").font = styles["header_font"]
         row += 1
-        ws_index.cell(row=row, column=1, value="Sheet Name").font = HEADER_FONT
-        ws_index.cell(row=row, column=1).fill = HEADER_FILL
-        ws_index.cell(row=row, column=2, value="Source").font = HEADER_FONT
-        ws_index.cell(row=row, column=2).fill = HEADER_FILL
+        ws_index.cell(row=row, column=1, value="Sheet Name").font = styles["header_font"]
+        ws_index.cell(row=row, column=1).fill = styles["header_fill"]
+        ws_index.cell(row=row, column=2, value="Source").font = styles["header_font"]
+        ws_index.cell(row=row, column=2).fill = styles["header_fill"]
         row += 1
 
     _auto_width(ws_index)
@@ -316,7 +340,7 @@ def _build_multi_sheet(wb, company_name, ticker, xbrl_data, selected_tables, sel
         sheet_name = _unique_sheet_name(statement_name, used_sheet_names)
         ws = wb.create_sheet(title=sheet_name)
         ws.freeze_panes = "B3"
-        _write_xbrl_statement(ws, statement_name, statement_data, periods, start_row=1)
+        _write_xbrl_statement(ws, statement_name, statement_data, periods, start_row=1, styles=styles)
         _auto_width(ws)
 
     # --- Individual Table Sheets ---
@@ -332,7 +356,7 @@ def _build_multi_sheet(wb, company_name, ticker, xbrl_data, selected_tables, sel
         ws = wb.create_sheet(title=sheet_name)
         ws.freeze_panes = "A3"
 
-        _write_html_table(ws, table, start_row=1, filing_source=source)
+        _write_html_table(ws, table, start_row=1, styles=styles, filing_source=source)
         _auto_width(ws)
 
         # Add to index
