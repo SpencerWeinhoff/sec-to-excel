@@ -63,7 +63,7 @@
                 <button id="btn-select-no-tables" class="btn-sm btn-outline">Clear All</button>
             </div>
             <div id="tables-list" class="filings-list"></div>
-            <p id="tables-empty" class="hidden" style="color:#8b949e;font-size:14px;margin-top:8px;">No additional tables found in the selected filings.</p>
+            <p id="tables-empty" class="hidden" style="color:#9ca3af;font-size:14px;margin-top:8px;">No additional tables found in the selected filings.</p>
         </section>
 
         <!-- Step 4: Generate -->
@@ -89,7 +89,18 @@
             <!-- Company color theme -->
             <div class="color-theme-section">
                 <h3>Excel Color Theme</h3>
-                <div class="color-presets" id="color-presets"></div>
+                <p>Type a company name to use their brand colors in the Excel file, or pick custom colors below.</p>
+                <div class="color-input-row">
+                    <div class="color-input-group">
+                        <label>Company</label>
+                        <input type="text" id="color-company-input" placeholder="e.g. Apple, Nike, Walmart...">
+                    </div>
+                </div>
+                <div class="color-match-result" id="color-match-result">
+                    <div class="color-swatch" id="match-swatch-primary"></div>
+                    <div class="color-swatch" id="match-swatch-accent"></div>
+                    <span>Matched: <span class="match-label" id="match-label"></span></span>
+                </div>
                 <div class="custom-colors">
                     <div class="color-picker-group">
                         <label>Primary</label>
@@ -99,12 +110,6 @@
                         <label>Accent</label>
                         <input type="color" id="color-accent" value="#D9E1F2">
                     </div>
-                </div>
-                <div class="color-preview" id="color-preview">
-                    <div class="color-swatch" id="preview-primary"></div>
-                    <span>Title bars</span>
-                    <div class="color-swatch" id="preview-accent"></div>
-                    <span>Headers</span>
                 </div>
             </div>
 

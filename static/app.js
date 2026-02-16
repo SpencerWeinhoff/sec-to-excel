@@ -6,27 +6,112 @@ let scannedTables = [];
 let selectedTableIds = new Set();
 let currentScanId = null;
 
-// Company brand color presets
-const COLOR_PRESETS = {
-    "Default":   { primary: "#4472C4", accent: "#D9E1F2" },
-    "Apple":     { primary: "#333333", accent: "#E0E0E0" },
-    "Microsoft": { primary: "#0078D4", accent: "#DEECF9" },
-    "Google":    { primary: "#4285F4", accent: "#D2E3FC" },
-    "Amazon":    { primary: "#FF9900", accent: "#FFF2CC" },
-    "Meta":      { primary: "#0668E1", accent: "#D6E8FF" },
-    "Netflix":   { primary: "#E50914", accent: "#FDDEDE" },
-    "Tesla":     { primary: "#CC0000", accent: "#F5D5D5" },
-    "JPMorgan":  { primary: "#004B87", accent: "#D0E2F0" },
-    "Goldman":   { primary: "#6B9AC4", accent: "#E1ECF5" },
-    "Walmart":   { primary: "#0071CE", accent: "#D6ECFF" },
-    "Disney":    { primary: "#113CCF", accent: "#D4DDFA" },
-    "Nike":      { primary: "#111111", accent: "#E0E0E0" },
-    "Coca-Cola": { primary: "#F40000", accent: "#FDE0E0" },
-    "Nvidia":    { primary: "#76B900", accent: "#E8F5CC" },
-    "Berkshire": { primary: "#2D2D6E", accent: "#D8D8EA" },
+// Brand color database — keywords map to colors
+const BRAND_COLORS = {
+    "apple":       { primary: "#333333", accent: "#E0E0E0" },
+    "aapl":        { primary: "#333333", accent: "#E0E0E0" },
+    "microsoft":   { primary: "#0078D4", accent: "#DEECF9" },
+    "msft":        { primary: "#0078D4", accent: "#DEECF9" },
+    "google":      { primary: "#4285F4", accent: "#D2E3FC" },
+    "alphabet":    { primary: "#4285F4", accent: "#D2E3FC" },
+    "googl":       { primary: "#4285F4", accent: "#D2E3FC" },
+    "amazon":      { primary: "#FF9900", accent: "#FFF2CC" },
+    "amzn":        { primary: "#FF9900", accent: "#FFF2CC" },
+    "meta":        { primary: "#0668E1", accent: "#D6E8FF" },
+    "facebook":    { primary: "#0668E1", accent: "#D6E8FF" },
+    "netflix":     { primary: "#E50914", accent: "#FDDEDE" },
+    "nflx":        { primary: "#E50914", accent: "#FDDEDE" },
+    "tesla":       { primary: "#CC0000", accent: "#F5D5D5" },
+    "tsla":        { primary: "#CC0000", accent: "#F5D5D5" },
+    "nvidia":      { primary: "#76B900", accent: "#E8F5CC" },
+    "nvda":        { primary: "#76B900", accent: "#E8F5CC" },
+    "jpmorgan":    { primary: "#004B87", accent: "#D0E2F0" },
+    "jpm":         { primary: "#004B87", accent: "#D0E2F0" },
+    "chase":       { primary: "#004B87", accent: "#D0E2F0" },
+    "goldman":     { primary: "#6B9AC4", accent: "#E1ECF5" },
+    "gs":          { primary: "#6B9AC4", accent: "#E1ECF5" },
+    "morgan stanley": { primary: "#002F5F", accent: "#D0DFEE" },
+    "ms":          { primary: "#002F5F", accent: "#D0DFEE" },
+    "bank of america": { primary: "#012169", accent: "#CDD6E8" },
+    "bac":         { primary: "#012169", accent: "#CDD6E8" },
+    "wells fargo": { primary: "#D71E28", accent: "#F9D5D7" },
+    "wfc":         { primary: "#D71E28", accent: "#F9D5D7" },
+    "citigroup":   { primary: "#003B70", accent: "#CDDCED" },
+    "citi":        { primary: "#003B70", accent: "#CDDCED" },
+    "walmart":     { primary: "#0071CE", accent: "#D6ECFF" },
+    "wmt":         { primary: "#0071CE", accent: "#D6ECFF" },
+    "costco":      { primary: "#E31837", accent: "#F9D3D9" },
+    "cost":        { primary: "#E31837", accent: "#F9D3D9" },
+    "target":      { primary: "#CC0000", accent: "#F5D5D5" },
+    "tgt":         { primary: "#CC0000", accent: "#F5D5D5" },
+    "disney":      { primary: "#113CCF", accent: "#D4DDFA" },
+    "dis":         { primary: "#113CCF", accent: "#D4DDFA" },
+    "nike":        { primary: "#111111", accent: "#E0E0E0" },
+    "nke":         { primary: "#111111", accent: "#E0E0E0" },
+    "coca-cola":   { primary: "#F40000", accent: "#FDE0E0" },
+    "coca cola":   { primary: "#F40000", accent: "#FDE0E0" },
+    "coke":        { primary: "#F40000", accent: "#FDE0E0" },
+    "ko":          { primary: "#F40000", accent: "#FDE0E0" },
+    "pepsi":       { primary: "#004B93", accent: "#D0DFF0" },
+    "pepsico":     { primary: "#004B93", accent: "#D0DFF0" },
+    "pep":         { primary: "#004B93", accent: "#D0DFF0" },
+    "berkshire":   { primary: "#2D2D6E", accent: "#D8D8EA" },
+    "brk":         { primary: "#2D2D6E", accent: "#D8D8EA" },
+    "johnson":     { primary: "#D51900", accent: "#F6D3CE" },
+    "jnj":         { primary: "#D51900", accent: "#F6D3CE" },
+    "procter":     { primary: "#003DA5", accent: "#CCDDF2" },
+    "p&g":         { primary: "#003DA5", accent: "#CCDDF2" },
+    "pg":          { primary: "#003DA5", accent: "#CCDDF2" },
+    "visa":        { primary: "#1A1F71", accent: "#D2D4E9" },
+    "v":           { primary: "#1A1F71", accent: "#D2D4E9" },
+    "mastercard":  { primary: "#EB001B", accent: "#FBCCCE" },
+    "ma":          { primary: "#EB001B", accent: "#FBCCCE" },
+    "unitedhealth": { primary: "#002677", accent: "#CCD5EC" },
+    "unh":         { primary: "#002677", accent: "#CCD5EC" },
+    "exxon":       { primary: "#ED1C24", accent: "#FBD1D3" },
+    "xom":         { primary: "#ED1C24", accent: "#FBD1D3" },
+    "chevron":     { primary: "#0054A6", accent: "#CDE0F3" },
+    "cvx":         { primary: "#0054A6", accent: "#CDE0F3" },
+    "pfizer":      { primary: "#0093D0", accent: "#CCE9F6" },
+    "pfe":         { primary: "#0093D0", accent: "#CCE9F6" },
+    "intel":       { primary: "#0071C5", accent: "#D6ECFF" },
+    "intc":        { primary: "#0071C5", accent: "#D6ECFF" },
+    "amd":         { primary: "#ED1C24", accent: "#FBD1D3" },
+    "salesforce":  { primary: "#00A1E0", accent: "#CCEDFA" },
+    "crm":         { primary: "#00A1E0", accent: "#CCEDFA" },
+    "adobe":       { primary: "#FF0000", accent: "#FFCCCC" },
+    "adbe":        { primary: "#FF0000", accent: "#FFCCCC" },
+    "oracle":      { primary: "#F80000", accent: "#FECCCC" },
+    "orcl":        { primary: "#F80000", accent: "#FECCCC" },
+    "ibm":         { primary: "#0530AD", accent: "#D0D8F2" },
+    "cisco":       { primary: "#049FD9", accent: "#CDECF8" },
+    "csco":        { primary: "#049FD9", accent: "#CDECF8" },
+    "uber":        { primary: "#000000", accent: "#E0E0E0" },
+    "airbnb":      { primary: "#FF5A5F", accent: "#FFD9DA" },
+    "abnb":        { primary: "#FF5A5F", accent: "#FFD9DA" },
+    "spotify":     { primary: "#1DB954", accent: "#D2F5DF" },
+    "spot":        { primary: "#1DB954", accent: "#D2F5DF" },
+    "snap":        { primary: "#FFFC00", accent: "#FFFEE6" },
+    "snapchat":    { primary: "#FFFC00", accent: "#FFFEE6" },
+    "paypal":      { primary: "#003087", accent: "#CCD8EE" },
+    "pypl":        { primary: "#003087", accent: "#CCD8EE" },
+    "starbucks":   { primary: "#006241", accent: "#CCDFDA" },
+    "sbux":        { primary: "#006241", accent: "#CCDFDA" },
+    "mcdonalds":   { primary: "#FFC72C", accent: "#FFF4D4" },
+    "mcd":         { primary: "#FFC72C", accent: "#FFF4D4" },
+    "boeing":      { primary: "#0033A0", accent: "#CCD6F0" },
+    "ba":          { primary: "#0033A0", accent: "#CCD6F0" },
+    "lockheed":    { primary: "#003366", accent: "#CCD6E0" },
+    "lmt":         { primary: "#003366", accent: "#CCD6E0" },
+    "caterpillar": { primary: "#FFCD11", accent: "#FFF5D0" },
+    "cat":         { primary: "#FFCD11", accent: "#FFF5D0" },
+    "3m":          { primary: "#FF0000", accent: "#FFCCCC" },
+    "mmm":         { primary: "#FF0000", accent: "#FFCCCC" },
+    "home depot":  { primary: "#F96302", accent: "#FEE0CC" },
+    "hd":          { primary: "#F96302", accent: "#FEE0CC" },
+    "lowes":       { primary: "#004990", accent: "#CCD8EE" },
+    "low":         { primary: "#004990", accent: "#CCD8EE" },
 };
-
-let selectedPreset = "Default";
 
 // DOM elements
 const searchInput = document.getElementById("search-input");
@@ -49,8 +134,11 @@ const generateError = document.getElementById("generate-error");
 const resetSection = document.getElementById("reset-section");
 const colorPrimary = document.getElementById("color-primary");
 const colorAccent = document.getElementById("color-accent");
-const previewPrimary = document.getElementById("preview-primary");
-const previewAccent = document.getElementById("preview-accent");
+const colorCompanyInput = document.getElementById("color-company-input");
+const colorMatchResult = document.getElementById("color-match-result");
+const matchSwatchPrimary = document.getElementById("match-swatch-primary");
+const matchSwatchAccent = document.getElementById("match-swatch-accent");
+const matchLabel = document.getElementById("match-label");
 
 // Debounce helper
 function debounce(fn, ms) {
@@ -62,52 +150,33 @@ function debounce(fn, ms) {
 }
 
 // --- Color Theme ---
-function renderColorPresets() {
-    const container = document.getElementById("color-presets");
-    let html = "";
-    for (const [name, colors] of Object.entries(COLOR_PRESETS)) {
-        const active = name === selectedPreset ? "active" : "";
-        html += `
-            <button class="color-preset ${active}" data-preset="${name}">
-                <div class="color-swatch" style="background:${colors.primary}"></div>
-                ${name}
-            </button>
-        `;
+function lookupBrandColor(query) {
+    if (!query) return null;
+    const q = query.toLowerCase().trim();
+    // Direct match
+    if (BRAND_COLORS[q]) return { name: query, colors: BRAND_COLORS[q] };
+    // Partial match — find first key that contains the query or vice versa
+    for (const [key, colors] of Object.entries(BRAND_COLORS)) {
+        if (key.includes(q) || q.includes(key)) {
+            return { name: key.charAt(0).toUpperCase() + key.slice(1), colors };
+        }
     }
-    container.innerHTML = html;
-
-    container.querySelectorAll(".color-preset").forEach((btn) => {
-        btn.addEventListener("click", () => {
-            selectedPreset = btn.dataset.preset;
-            const colors = COLOR_PRESETS[selectedPreset];
-            colorPrimary.value = colors.primary;
-            colorAccent.value = colors.accent;
-            updateColorPreview();
-            renderColorPresets();
-        });
-    });
+    return null;
 }
 
-function updateColorPreview() {
-    previewPrimary.style.background = colorPrimary.value;
-    previewAccent.style.background = colorAccent.value;
-}
-
-colorPrimary.addEventListener("input", () => {
-    selectedPreset = null;
-    renderColorPresets();
-    updateColorPreview();
-});
-
-colorAccent.addEventListener("input", () => {
-    selectedPreset = null;
-    renderColorPresets();
-    updateColorPreview();
-});
-
-// Initialize
-renderColorPresets();
-updateColorPreview();
+colorCompanyInput.addEventListener("input", debounce(function () {
+    const match = lookupBrandColor(colorCompanyInput.value);
+    if (match) {
+        colorPrimary.value = match.colors.primary;
+        colorAccent.value = match.colors.accent;
+        matchSwatchPrimary.style.background = match.colors.primary;
+        matchSwatchAccent.style.background = match.colors.accent;
+        matchLabel.textContent = match.name;
+        colorMatchResult.classList.add("visible");
+    } else {
+        colorMatchResult.classList.remove("visible");
+    }
+}, 200));
 
 // --- Search ---
 searchInput.addEventListener(
@@ -124,13 +193,13 @@ searchInput.addEventListener(
             const data = await resp.json();
 
             if (data.error) {
-                searchResults.innerHTML = `<div class="dropdown-item"><span class="company-name" style="color:#f85149">${data.error}</span></div>`;
+                searchResults.innerHTML = `<div class="dropdown-item"><span class="company-name" style="color:#dc2626">${data.error}</span></div>`;
                 searchResults.classList.remove("hidden");
                 return;
             }
 
             if (data.length === 0) {
-                searchResults.innerHTML = `<div class="dropdown-item"><span class="company-name" style="color:#8b949e">No results found</span></div>`;
+                searchResults.innerHTML = `<div class="dropdown-item"><span class="company-name" style="color:#9ca3af">No results found</span></div>`;
                 searchResults.classList.remove("hidden");
                 return;
             }
@@ -169,17 +238,19 @@ async function selectCompany({ cik, ticker, name }) {
     searchResults.classList.add("hidden");
     searchInput.value = `${name} (${ticker})`;
 
-    // Auto-select matching color preset if one exists
-    const matchKey = Object.keys(COLOR_PRESETS).find(
-        (k) => k.toLowerCase() === name.split(" ")[0].toLowerCase() ||
-               k.toLowerCase() === ticker.toLowerCase()
-    );
-    if (matchKey) {
-        selectedPreset = matchKey;
-        colorPrimary.value = COLOR_PRESETS[matchKey].primary;
-        colorAccent.value = COLOR_PRESETS[matchKey].accent;
-        updateColorPreview();
-        renderColorPresets();
+    // Auto-fill color company input
+    const match = lookupBrandColor(name) || lookupBrandColor(ticker);
+    if (match) {
+        colorCompanyInput.value = match.name;
+        colorPrimary.value = match.colors.primary;
+        colorAccent.value = match.colors.accent;
+        matchSwatchPrimary.style.background = match.colors.primary;
+        matchSwatchAccent.style.background = match.colors.accent;
+        matchLabel.textContent = match.name;
+        colorMatchResult.classList.add("visible");
+    } else {
+        colorCompanyInput.value = "";
+        colorMatchResult.classList.remove("visible");
     }
 
     // Show filings step, hide later steps
@@ -278,7 +349,6 @@ function updateScanButton() {
     } else {
         btnScan.classList.add("hidden");
     }
-    // Hide later steps when filing selection changes
     stepTables.classList.add("hidden");
     stepGenerate.classList.add("hidden");
 }
@@ -362,7 +432,6 @@ function renderTables() {
     }
     tablesEmpty.classList.add("hidden");
 
-    // Group tables by filing
     const groups = {};
     for (const t of scannedTables) {
         const key = `${t.filing_type} (${t.filing_date})`;
@@ -499,12 +568,11 @@ document.getElementById("btn-reset").addEventListener("click", () => {
     scannedTables = [];
     selectedTableIds.clear();
     currentScanId = null;
-    selectedPreset = "Default";
     searchInput.value = "";
+    colorCompanyInput.value = "";
     colorPrimary.value = "#4472C4";
     colorAccent.value = "#D9E1F2";
-    updateColorPreview();
-    renderColorPresets();
+    colorMatchResult.classList.remove("visible");
     stepFilings.classList.add("hidden");
     stepTables.classList.add("hidden");
     stepGenerate.classList.add("hidden");
