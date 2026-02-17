@@ -1,4 +1,4 @@
-"""Flask application for SEC Filing to Excel converter."""
+"""Flask application for Spencer's Toolkit."""
 
 import os
 import time
@@ -29,7 +29,12 @@ def _clean_cache():
 
 
 @app.route("/")
-def index():
+def home():
+    return render_template("home.html")
+
+
+@app.route("/sec-to-excel")
+def sec_to_excel():
     return render_template("index.html")
 
 
