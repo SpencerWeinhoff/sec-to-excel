@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Industry Landscape — Spencer's Toolkit</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <nav class="tool-nav">
+        <a href="/" class="back-link">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6"/>
+            </svg>
+            Spencer's Toolkit
+        </a>
+    </nav>
+    <div class="container">
+        <header>
+            <h1>Industry Landscape</h1>
+            <p class="subtitle">Generate a PowerPoint with the key players in any industry</p>
+        </header>
+
+        <!-- Step 1: Pick an industry -->
+        <section id="step-industry" class="step active">
+            <div class="step-header">
+                <span class="step-number">1</span>
+                <h2>Choose an industry</h2>
+            </div>
+            <div id="industry-grid" class="industry-grid"></div>
+        </section>
+
+        <!-- Step 2: Select sub-industries -->
+        <section id="step-subs" class="step hidden">
+            <div class="step-header">
+                <span class="step-number">2</span>
+                <h2>Select sub-industries</h2>
+            </div>
+            <div id="selected-industry" class="selected-company"></div>
+            <div class="filing-controls">
+                <button id="btn-select-all-subs" class="btn-sm">Select All</button>
+                <button id="btn-select-no-subs" class="btn-sm btn-outline">Clear All</button>
+            </div>
+            <div id="subs-list" class="filings-list"></div>
+        </section>
+
+        <!-- Step 3: Generate -->
+        <section id="step-generate" class="step hidden">
+            <div class="step-header">
+                <span class="step-number">3</span>
+                <h2>Generate PowerPoint</h2>
+            </div>
+            <p id="generate-summary"></p>
+            <button id="btn-generate" class="btn-primary" style="margin-top:16px">Generate & Download PPT</button>
+            <div id="generate-loading" class="loading hidden">
+                <div class="spinner"></div>
+                <span id="generate-status">Building PowerPoint... Fetching logos may take a moment.</span>
+            </div>
+            <div id="generate-error" class="error hidden"></div>
+        </section>
+
+        <!-- Reset -->
+        <div id="reset-section" class="hidden">
+            <button id="btn-reset" class="btn-outline">Start Over</button>
+        </div>
+    </div>
+
+    <script src="/static/landscape.js"></script>
+</body>
+</html>

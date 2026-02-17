@@ -7,12 +7,20 @@ import uuid
 
 from flask import Flask, render_template, request, jsonify, send_file
 
+import json
+
 import sec_client
 import xbrl_parser
 import html_parser
 import excel_builder
+import ppt_builder
 
 app = Flask(__name__)
+
+# Load industry data at startup
+_industry_data_path = os.path.join(os.path.dirname(__file__), "industry_data.json")
+with open(_industry_data_path, "r") as _f:
+    _industry_data = json.load(_f)
 
 # In-memory cache for scanned tables (scan_id -> data)
 # So we don't have to re-fetch filings on generate
@@ -207,6 +215,78 @@ def api_generate():
     except Exception as e:
         traceback.print_exc()
         return jsonify({"error": f"Generation failed: {str(e)}"}), 500
+
+
+# ── Industry Landscape routes ──
+
+@app.route("/landscape")
+def landscape():
+    return render_template("landscape.html")
+
+
+@app.route("/api/industries")
+def api_industries():
+    """Return industry list with sub-industry summaries."""
+    result = []
+    for ind in _industry_data.get("industries", []):
+        subs = []
+        total_companies = 0
+        for sub in ind.get("sub_industries", []):
+            companies = sub.get("companies", [])
+            total_companies += len(companies)
+            subs.append({
+                "id": sub["id"],
+                "name": sub["name"],
+                "companies": companies,
+            })
+        result.append({
+            "id": ind["id"],
+            "name": ind["name"],
+            "sub_industries": subs,
+            "company_count": total_companies,
+        })
+    return jsonify({"industries": result})
+
+
+@app.route("/api/landscape/generate", methods=["POST"])
+def api_landscape_generate():
+    """Generate industry landscape PPT."""
+    data = request.get_json()
+    if not data:
+        return jsonify({"error": "No data provided"}), 400
+
+    industry_id = data.get("industry_id", "")
+    sub_industry_ids = set(data.get("sub_industry_ids", []))
+
+    if not industry_id:
+        return jsonify({"error": "Industry ID is required"}), 400
+
+    # Find the industry
+    industry = None
+    for ind in _industry_data.get("industries", []):
+        if ind["id"] == industry_id:
+            industry = ind
+            break
+
+    if not industry:
+        return jsonify({"error": "Industry not found"}), 404
+
+    try:
+        filepath, filename = ppt_builder.build_landscape_ppt(
+            industry=industry,
+            selected_sub_ids=sub_industry_ids if sub_industry_ids else None,
+        )
+
+        return send_file(
+            filepath,
+            as_attachment=True,
+            download_name=filename,
+            mimetype="application/vnd.openxmlformats-officedocument.presentationml.presentation",
+        )
+
+    except Exception as e:
+        traceback.print_exc()
+        return jsonify({"error": f"PPT generation failed: {str(e)}"}), 500
 
 
 if __name__ == "__main__":
