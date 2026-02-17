@@ -17,12 +17,207 @@ DEFAULT_ACCENT = "D9E1F2"
 THIN_BORDER = Border(
     bottom=Side(style="thin", color="CCCCCC"),
 )
+SUBTOTAL_BORDER = Border(
+    top=Side(style="thin", color="000000"),
+    bottom=Side(style="thin", color="000000"),
+)
+TOTAL_BORDER = Border(
+    top=Side(style="thin", color="000000"),
+    bottom=Side(style="double", color="000000"),
+)
 
 # Accounting format
 ACCT_FMT = '#,##0_);(#,##0)'
 ACCT_FMT_DEC = '#,##0.00_);(#,##0.00)'
 PCT_FMT = '0.00%'
 
+
+# ─── Statement Structures for Formula-Based Output ─────────────────────
+#
+# Each item is one of:
+#   "data"    — writes the XBRL value from the parsed data
+#   "formula" — writes an Excel formula referencing other rows
+#   "section" — writes a bold section header (e.g. "ASSETS")
+#   "spacer"  — empty row for visual separation
+#
+# Formula items:
+#   "plus"     — list of item IDs whose cell values are added
+#   "minus"    — list of item IDs whose cell values are subtracted
+#   "fallback" — labels to look up in XBRL data if no formula components exist
+#   "total"    — if True, use double-underline border (major total)
+#
+# Data items:
+#   "labels"  — possible XBRL labels (tries each until one is found)
+#   "negate"  — if True, flip sign for display (e.g. payments shown as negative)
+
+INCOME_STRUCTURE = [
+    {"id": "revenue", "labels": ["Revenue"], "type": "data"},
+    {"id": "cogs", "labels": ["Cost of Revenue", "Cost of Goods Sold"], "type": "data"},
+    {"id": "gross_profit", "label": "Gross Profit", "type": "formula",
+     "plus": ["revenue"], "minus": ["cogs"],
+     "fallback": ["Gross Profit"]},
+
+    {"type": "spacer"},
+
+    {"id": "rd", "labels": ["Research & Development"], "type": "data"},
+    {"id": "sga", "labels": ["Selling, General & Administrative", "Selling & Marketing",
+                              "General & Administrative"], "type": "data"},
+    {"id": "opex", "label": "Total Operating Expenses", "type": "formula",
+     "plus": ["rd", "sga"], "minus": [],
+     "fallback": ["Total Operating Expenses"]},
+
+    {"type": "spacer"},
+
+    {"id": "op_income", "label": "Operating Income (Loss)", "type": "formula",
+     "plus": ["gross_profit"], "minus": ["opex"],
+     "fallback": ["Operating Income (Loss)"]},
+
+    {"type": "spacer"},
+
+    {"id": "int_exp", "labels": ["Interest Expense"], "type": "data"},
+    {"id": "int_inc", "labels": ["Interest Income"], "type": "data"},
+    {"id": "int_net", "labels": ["Net Interest Income (Expense)"], "type": "data"},
+    {"id": "other_nonop", "labels": ["Other Non-Operating Income (Expense)"], "type": "data"},
+    {"id": "pretax", "label": "Income Before Tax", "type": "formula",
+     "plus": ["op_income", "int_inc", "int_net", "other_nonop"],
+     "minus": ["int_exp"],
+     "fallback": ["Income Before Tax"]},
+
+    {"type": "spacer"},
+
+    {"id": "tax", "labels": ["Income Tax Expense (Benefit)"], "type": "data"},
+    {"id": "net_income", "label": "Net Income (Loss)", "type": "formula",
+     "plus": ["pretax"], "minus": ["tax"],
+     "fallback": ["Net Income (Loss)"], "total": True},
+
+    {"type": "spacer"},
+
+    {"id": "eps_basic", "labels": ["EPS (Basic)"], "type": "data"},
+    {"id": "eps_diluted", "labels": ["EPS (Diluted)"], "type": "data"},
+    {"id": "shares_bd", "labels": ["Weighted Avg Shares (Basic & Diluted)"], "type": "data"},
+    {"id": "shares_b", "labels": ["Weighted Avg Shares (Basic)"], "type": "data"},
+    {"id": "shares_d", "labels": ["Weighted Avg Shares (Diluted)"], "type": "data"},
+]
+
+BALANCE_STRUCTURE = [
+    {"type": "section", "label": "ASSETS"},
+
+    {"id": "cash", "labels": ["Cash & Cash Equivalents"], "type": "data"},
+    {"id": "st_inv", "labels": ["Short-Term Investments"], "type": "data"},
+    {"id": "ar", "labels": ["Accounts Receivable"], "type": "data"},
+    {"id": "inv", "labels": ["Inventory"], "type": "data"},
+    {"id": "prepaid", "labels": ["Prepaid Expenses & Other Current Assets"], "type": "data"},
+    {"id": "ca", "label": "Total Current Assets", "type": "formula",
+     "plus": ["cash", "st_inv", "ar", "inv", "prepaid"], "minus": [],
+     "fallback": ["Total Current Assets"]},
+
+    {"type": "spacer"},
+
+    {"id": "ppe", "labels": ["Property, Plant & Equipment (Net)"], "type": "data"},
+    {"id": "gw", "labels": ["Goodwill"], "type": "data"},
+    {"id": "intang", "labels": ["Intangible Assets (Net)"], "type": "data"},
+    {"id": "other_nca", "labels": ["Other Non-Current Assets"], "type": "data"},
+    {"id": "total_assets", "label": "Total Assets", "type": "formula",
+     "plus": ["ca", "ppe", "gw", "intang", "other_nca"], "minus": [],
+     "fallback": ["Total Assets"], "total": True},
+
+    {"type": "spacer"},
+    {"type": "section", "label": "LIABILITIES"},
+
+    {"id": "ap", "labels": ["Accounts Payable"], "type": "data"},
+    {"id": "accrued", "labels": ["Accrued Liabilities"], "type": "data"},
+    {"id": "cur_ltd", "labels": ["Current Portion of Long-Term Debt"], "type": "data"},
+    {"id": "st_borr", "labels": ["Short-Term Borrowings"], "type": "data"},
+    {"id": "cl", "label": "Total Current Liabilities", "type": "formula",
+     "plus": ["ap", "accrued", "cur_ltd", "st_borr"], "minus": [],
+     "fallback": ["Total Current Liabilities"]},
+
+    {"type": "spacer"},
+
+    {"id": "lt_debt", "labels": ["Long-Term Debt"], "type": "data"},
+    {"id": "lease", "labels": ["Operating Lease Liabilities (Non-Current)"], "type": "data"},
+    {"id": "other_ncl", "labels": ["Other Non-Current Liabilities"], "type": "data"},
+    {"id": "total_liab", "label": "Total Liabilities", "type": "formula",
+     "plus": ["cl", "lt_debt", "lease", "other_ncl"], "minus": [],
+     "fallback": ["Total Liabilities"]},
+
+    {"type": "spacer"},
+    {"type": "section", "label": "STOCKHOLDERS' EQUITY"},
+
+    {"id": "cs", "labels": ["Common Stock"], "type": "data"},
+    {"id": "apic", "labels": ["Additional Paid-In Capital"], "type": "data"},
+    {"id": "re", "labels": ["Retained Earnings (Accumulated Deficit)"], "type": "data"},
+    {"id": "aoci", "labels": ["Accumulated Other Comprehensive Income (Loss)"], "type": "data"},
+    {"id": "treasury", "labels": ["Treasury Stock"], "type": "data", "negate": True},
+    {"id": "total_eq", "label": "Total Stockholders' Equity", "type": "formula",
+     "plus": ["cs", "apic", "re", "aoci", "treasury"], "minus": [],
+     "fallback": ["Total Stockholders' Equity"]},
+
+    {"type": "spacer"},
+
+    {"id": "total_le", "label": "Total Liabilities & Stockholders' Equity", "type": "formula",
+     "plus": ["total_liab", "total_eq"], "minus": [],
+     "fallback": ["Total Liabilities & Stockholders' Equity"], "total": True},
+]
+
+CASHFLOW_STRUCTURE = [
+    {"type": "section", "label": "OPERATING ACTIVITIES"},
+
+    {"id": "cf_ni", "labels": ["Net Income"], "type": "data"},
+    {"id": "da", "labels": ["Depreciation & Amortization"], "type": "data"},
+    {"id": "sbc", "labels": ["Stock-Based Compensation"], "type": "data"},
+    {"id": "def_tax", "labels": ["Deferred Income Taxes"], "type": "data"},
+    {"id": "chg_ar", "labels": ["Change in Accounts Receivable"], "type": "data"},
+    {"id": "chg_inv", "labels": ["Change in Inventories"], "type": "data"},
+    {"id": "chg_ap", "labels": ["Change in Accounts Payable"], "type": "data"},
+    {"id": "chg_acc", "labels": ["Change in Accrued Liabilities"], "type": "data"},
+    {"id": "cfo", "label": "Net Cash from Operating Activities", "type": "formula",
+     "plus": ["cf_ni", "da", "sbc", "def_tax", "chg_ar", "chg_inv", "chg_ap", "chg_acc"],
+     "minus": [],
+     "fallback": ["Net Cash from Operating Activities"]},
+
+    {"type": "spacer"},
+    {"type": "section", "label": "INVESTING ACTIVITIES"},
+
+    {"id": "capex", "labels": ["Capital Expenditures"], "type": "data", "negate": True},
+    {"id": "acq", "labels": ["Acquisitions (Net of Cash)"], "type": "data", "negate": True},
+    {"id": "buy_inv", "labels": ["Purchases of Investments"], "type": "data", "negate": True},
+    {"id": "sell_inv", "labels": ["Proceeds from Sale of Investments"], "type": "data"},
+    {"id": "mat_inv", "labels": ["Proceeds from Maturities of Investments"], "type": "data"},
+    {"id": "cfi", "label": "Net Cash from Investing Activities", "type": "formula",
+     "plus": ["capex", "acq", "buy_inv", "sell_inv", "mat_inv"],
+     "minus": [],
+     "fallback": ["Net Cash from Investing Activities"]},
+
+    {"type": "spacer"},
+    {"type": "section", "label": "FINANCING ACTIVITIES"},
+
+    {"id": "debt_proc", "labels": ["Proceeds from Long-Term Debt"], "type": "data"},
+    {"id": "debt_repay", "labels": ["Repayments of Long-Term Debt"], "type": "data", "negate": True},
+    {"id": "divs", "labels": ["Dividends Paid", "Dividends Paid (Common Stock)"],
+     "type": "data", "negate": True},
+    {"id": "buybacks", "labels": ["Share Repurchases"], "type": "data", "negate": True},
+    {"id": "stock_iss", "labels": ["Proceeds from Stock Issuance"], "type": "data"},
+    {"id": "cff", "label": "Net Cash from Financing Activities", "type": "formula",
+     "plus": ["debt_proc", "debt_repay", "divs", "buybacks", "stock_iss"],
+     "minus": [],
+     "fallback": ["Net Cash from Financing Activities"]},
+
+    {"type": "spacer"},
+
+    {"id": "net_cash", "label": "Net Change in Cash", "type": "formula",
+     "plus": ["cfo", "cfi", "cff"], "minus": [],
+     "fallback": ["Net Change in Cash"], "total": True},
+]
+
+STATEMENT_STRUCTURES = {
+    "Income Statement": INCOME_STRUCTURE,
+    "Balance Sheet": BALANCE_STRUCTURE,
+    "Cash Flow": CASHFLOW_STRUCTURE,
+}
+
+
+# ─── Helpers ────────────────────────────────────────────────────────────
 
 def _hex_to_openpyxl(hex_color):
     """Convert #RRGGBB to RRGGBB for openpyxl."""
@@ -138,9 +333,49 @@ def _write_title_bar(ws, row, title, num_cols, styles):
         ws.cell(row=row, column=col).fill = styles["title_fill"]
 
 
-def _write_xbrl_statement(ws, statement_name, statement_data, periods, start_row, styles):
-    """Write a single XBRL financial statement. Returns next available row."""
-    if not statement_data:
+def _find_data_for_item(statement_data, labels):
+    """Find period->value dict for an item by checking multiple possible labels.
+
+    Returns (values_dict, matched_label) or (None, None).
+    """
+    for label in labels:
+        if label in statement_data:
+            return statement_data[label], label
+    return None, None
+
+
+def _build_formula(col_letter, plus_rows, minus_rows):
+    """Build an Excel formula string from plus/minus row references.
+
+    Example: _build_formula("B", [3, 5], [4]) -> "=B3+B5-B4"
+    """
+    if not plus_rows and not minus_rows:
+        return None
+
+    parts = []
+    for r in plus_rows:
+        parts.append(f"+{col_letter}{r}")
+    for r in minus_rows:
+        parts.append(f"-{col_letter}{r}")
+
+    formula = "=" + "".join(parts)
+    # Clean up leading +
+    if formula.startswith("=+"):
+        formula = "=" + formula[2:]
+    return formula
+
+
+# ─── Formula-Based Statement Writer ────────────────────────────────────
+
+def _write_formula_statement(ws, statement_name, statement_data, periods, start_row, styles):
+    """Write a financial statement with real Excel formulas. Returns next available row.
+
+    Uses the structured layout from STATEMENT_STRUCTURES. Data items get XBRL values,
+    formula items get Excel formulas (e.g. =B3-B4). Falls back to XBRL values when
+    formula components are unavailable.
+    """
+    structure = STATEMENT_STRUCTURES.get(statement_name)
+    if not structure or not statement_data:
         return start_row
 
     row = start_row
@@ -160,22 +395,115 @@ def _write_xbrl_statement(ws, statement_name, statement_data, periods, start_row
         cell.alignment = Alignment(horizontal="center")
     row += 1
 
-    # Data rows
-    for label, period_values in statement_data.items():
-        ws.cell(row=row, column=1, value=label)
-        ws.cell(row=row, column=1).border = THIN_BORDER
-        for i, period in enumerate(periods):
-            if period in period_values:
-                val = period_values[period]
-                if isinstance(val, (int, float)):
-                    _format_number_cell(ws.cell(row=row, column=i + 2), val)
-                else:
-                    ws.cell(row=row, column=i + 2, value=val)
-        row += 1
+    # Track which Excel row each item ID is written to
+    row_map = {}
+
+    for item in structure:
+        item_type = item.get("type")
+
+        # ── Spacer ──
+        if item_type == "spacer":
+            row += 1
+            continue
+
+        # ── Section header ──
+        if item_type == "section":
+            ws.cell(row=row, column=1, value=item["label"]).font = Font(
+                bold=True, size=11, color="555555"
+            )
+            row += 1
+            continue
+
+        item_id = item.get("id")
+
+        # ── Data item ──
+        if item_type == "data":
+            values, matched_label = _find_data_for_item(
+                statement_data, item.get("labels", [])
+            )
+            if not values:
+                continue  # Skip items with no XBRL data
+
+            negate = item.get("negate", False)
+            display_label = matched_label or item.get("labels", [""])[0]
+
+            c = ws.cell(row=row, column=1, value=display_label)
+            c.border = THIN_BORDER
+            c.alignment = Alignment(indent=1)
+
+            has_any_value = False
+            for i, period in enumerate(periods):
+                if period in values:
+                    val = values[period]
+                    if isinstance(val, (int, float)):
+                        if negate:
+                            val = -val
+                        _format_number_cell(ws.cell(row=row, column=i + 2), val)
+                        has_any_value = True
+
+            if has_any_value:
+                row_map[item_id] = row
+            row += 1
+
+        # ── Formula item ──
+        elif item_type == "formula":
+            plus_rows = [row_map[ref] for ref in item.get("plus", []) if ref in row_map]
+            minus_rows = [row_map[ref] for ref in item.get("minus", []) if ref in row_map]
+            has_formula = bool(plus_rows or minus_rows)
+
+            is_total = item.get("total", False)
+            border = TOTAL_BORDER if is_total else SUBTOTAL_BORDER
+
+            if has_formula:
+                label = item.get("label", "")
+                c = ws.cell(row=row, column=1, value=label)
+                c.font = Font(bold=True)
+                c.border = border
+
+                for i, period in enumerate(periods):
+                    col_letter = get_column_letter(i + 2)
+                    formula = _build_formula(col_letter, plus_rows, minus_rows)
+                    if formula:
+                        cell = ws.cell(row=row, column=i + 2)
+                        cell.value = formula
+                        cell.number_format = ACCT_FMT
+                        cell.alignment = Alignment(horizontal="right")
+                        cell.font = Font(bold=True)
+                        cell.border = border
+
+                row_map[item_id] = row
+                row += 1
+
+            else:
+                # No formula components available — fall back to XBRL value
+                fallback_labels = item.get("fallback", [])
+                values, matched_label = _find_data_for_item(statement_data, fallback_labels)
+                if values:
+                    label = item.get("label", "")
+                    c = ws.cell(row=row, column=1, value=label)
+                    c.font = Font(bold=True)
+                    c.border = border
+
+                    has_any_value = False
+                    for i, period in enumerate(periods):
+                        if period in values:
+                            val = values[period]
+                            if isinstance(val, (int, float)):
+                                cell = ws.cell(row=row, column=i + 2)
+                                _format_number_cell(cell, val)
+                                cell.font = Font(bold=True)
+                                cell.border = border
+                                has_any_value = True
+
+                    if has_any_value:
+                        row_map[item_id] = row
+                    row += 1
 
     row += 1
     return row
 
+
+# ─── HTML Table Writer (unchanged) ─────────────────────────────────────
 
 def _write_html_table(ws, table_dict, start_row, styles, title_override=None, filing_source=None):
     """Write one HTML-extracted table with matching formatting. Returns next available row."""
@@ -224,6 +552,8 @@ def _write_html_table(ws, table_dict, start_row, styles, title_override=None, fi
     row += 1
     return row
 
+
+# ─── Workbook Builders ─────────────────────────────────────────────────
 
 def build_workbook(company_name, ticker, xbrl_data, selected_tables, selected_filings,
                    single_sheet=False, brand_colors=None):
@@ -276,11 +606,11 @@ def _build_single_sheet(wb, company_name, ticker, xbrl_data, selected_tables, se
     ws.cell(row=row, column=1, value=f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M')}").font = styles["subtitle_font"]
     row += 2
 
-    # XBRL statements
+    # XBRL statements — now with formulas
     for statement_name in ("Income Statement", "Balance Sheet", "Cash Flow"):
         statement_data = xbrl_data.get(statement_name, {})
         if statement_data:
-            row = _write_xbrl_statement(ws, statement_name, statement_data, periods, start_row=row, styles=styles)
+            row = _write_formula_statement(ws, statement_name, statement_data, periods, start_row=row, styles=styles)
             row += 1
 
     # Selected HTML tables
@@ -331,7 +661,7 @@ def _build_multi_sheet(wb, company_name, ticker, xbrl_data, selected_tables, sel
 
     _auto_width(ws_index)
 
-    # --- Core Financial Statement Sheets ---
+    # --- Core Financial Statement Sheets (with formulas) ---
     for statement_name in ("Income Statement", "Balance Sheet", "Cash Flow"):
         statement_data = xbrl_data.get(statement_name, {})
         if not statement_data:
@@ -340,7 +670,7 @@ def _build_multi_sheet(wb, company_name, ticker, xbrl_data, selected_tables, sel
         sheet_name = _unique_sheet_name(statement_name, used_sheet_names)
         ws = wb.create_sheet(title=sheet_name)
         ws.freeze_panes = "B3"
-        _write_xbrl_statement(ws, statement_name, statement_data, periods, start_row=1, styles=styles)
+        _write_formula_statement(ws, statement_name, statement_data, periods, start_row=1, styles=styles)
         _auto_width(ws)
 
     # --- Individual Table Sheets ---
