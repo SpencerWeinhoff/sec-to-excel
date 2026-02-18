@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Value Chain Generator — Spencer's Toolkit</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <nav class="tool-nav">
+        <a href="/" class="back-link">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6"/>
+            </svg>
+            Spencer's Toolkit
+        </a>
+    </nav>
+    <div class="container">
+        <header>
+            <h1>Value Chain Generator</h1>
+            <p class="subtitle">Generate PowerPoint presentations mapping the value chain for any industry</p>
+        </header>
+
+        <!-- Step 1: Search for a value chain -->
+        <section id="step-search" class="step active">
+            <div class="step-header">
+                <span class="step-number">1</span>
+                <h2>Choose an industry</h2>
+            </div>
+            <div class="search-box">
+                <input type="text" id="vc-search-input" placeholder="Search industries (e.g. Semiconductors, AI, Pharma...)">
+                <div id="vc-dropdown" class="dropdown hidden"></div>
+            </div>
+            <div id="vc-grid" class="industry-grid" style="margin-top:16px"></div>
+        </section>
+
+        <!-- Step 2: Select scope -->
+        <section id="step-scope" class="step hidden">
+            <div class="step-header">
+                <span class="step-number">2</span>
+                <h2>Select scope</h2>
+            </div>
+            <div id="selected-chain" class="selected-company"></div>
+            <div class="output-toggle">
+                <label class="radio-label">
+                    <input type="radio" name="scope" value="broad" checked>
+                    <span>Broad</span>
+                    <span class="radio-desc">High-level, 5–7 stages covering the full industry</span>
+                </label>
+                <label class="radio-label">
+                    <input type="radio" name="scope" value="narrow">
+                    <span>Narrow</span>
+                    <span class="radio-desc" id="narrow-desc">Granular, 7–10 stages focused on a specific niche</span>
+                </label>
+                <label class="radio-label">
+                    <input type="radio" name="scope" value="both">
+                    <span>Both</span>
+                    <span class="radio-desc">Two overview slides — broad and narrow — with narrow deep-dives</span>
+                </label>
+            </div>
+        </section>
+
+        <!-- Step 3: Generate -->
+        <section id="step-generate" class="step hidden">
+            <div class="step-header">
+                <span class="step-number">3</span>
+                <h2>Generate PowerPoint</h2>
+            </div>
+            <p id="vc-generate-summary"></p>
+            <button id="btn-vc-generate" class="btn-primary" style="margin-top:16px">Generate & Download PPT</button>
+            <div id="vc-generate-loading" class="loading hidden">
+                <div class="spinner"></div>
+                <span>Building PowerPoint...</span>
+            </div>
+            <div id="vc-generate-error" class="error hidden"></div>
+        </section>
+
+        <!-- Reset -->
+        <div id="vc-reset-section" class="hidden">
+            <button id="btn-vc-reset" class="btn-outline">Start Over</button>
+        </div>
+    </div>
+
+    <script src="/static/value_chain.js"></script>
+</body>
+</html>

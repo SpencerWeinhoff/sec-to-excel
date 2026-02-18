@@ -1,0 +1,1649 @@
+{
+  "value_chains": [
+    {
+      "id": "semiconductors",
+      "name": "Semiconductors",
+      "keywords": ["semiconductor", "chip", "nvidia", "tsmc", "intel", "amd", "qualcomm", "silicon", "wafer", "foundry", "fab", "asml", "eda", "integrated circuit"],
+      "broad": {
+        "stages": [
+          {
+            "name": "Raw Materials & Mining",
+            "description": "Extraction of silicon, rare earth elements, and specialty gases that form the foundation of all semiconductor manufacturing.",
+            "players": [
+              {"name": "Shin-Etsu Chemical", "role": "World's largest silicon wafer manufacturer"},
+              {"name": "SUMCO", "role": "Major silicon wafer supplier for global fabs"},
+              {"name": "Entegris", "role": "Specialty chemicals and advanced materials for chip manufacturing"},
+              {"name": "Linde", "role": "Industrial gases critical to cleanroom fabrication processes"}
+            ]
+          },
+          {
+            "name": "Equipment & EDA Tools",
+            "description": "Manufacturing equipment for lithography, deposition, and etching, plus electronic design automation software used to architect chip layouts.",
+            "players": [
+              {"name": "ASML", "role": "Sole supplier of extreme ultraviolet (EUV) lithography machines essential for leading-edge nodes"},
+              {"name": "Applied Materials", "role": "Largest semiconductor equipment maker, providing deposition, etch, and inspection tools"},
+              {"name": "Synopsys", "role": "Leading EDA software provider for chip design verification and IP licensing", "alsoIn": ["Chip Design"]},
+              {"name": "Cadence", "role": "Major EDA tools and IP provider powering complex chip design workflows", "alsoIn": ["Chip Design"]}
+            ]
+          },
+          {
+            "name": "Chip Design",
+            "description": "Architecture and design of integrated circuits, including logic, memory, and analog chips tailored for specific workloads.",
+            "players": [
+              {"name": "NVIDIA", "role": "Designer of GPUs and AI accelerators dominating data center and gaming markets"},
+              {"name": "AMD", "role": "Designer of CPUs and GPUs competing across data center, PC, and console segments"},
+              {"name": "Apple", "role": "Designer of custom ARM-based chips (M-series, A-series) for its devices", "alsoIn": ["End Markets"]},
+              {"name": "Qualcomm", "role": "Leading designer of mobile SoCs and wireless modem chips for smartphones"}
+            ]
+          },
+          {
+            "name": "Wafer Fabrication",
+            "description": "The actual manufacturing of semiconductor wafers in cleanroom fabs, turning chip designs into physical silicon through hundreds of process steps.",
+            "players": [
+              {"name": "TSMC", "role": "World's largest pure-play foundry, manufacturing chips for Apple, NVIDIA, AMD, and others"},
+              {"name": "Samsung Foundry", "role": "Second-largest foundry with advanced process nodes and vertically integrated memory", "alsoIn": ["End Markets"]},
+              {"name": "Intel Foundry", "role": "Expanding foundry services while manufacturing its own CPU designs at leading-edge nodes", "alsoIn": ["Chip Design", "End Markets"]},
+              {"name": "GlobalFoundries", "role": "Specialty foundry focused on mature and differentiated process nodes for automotive and IoT"}
+            ]
+          },
+          {
+            "name": "Packaging & Testing",
+            "description": "Advanced packaging (chiplets, 3D stacking) and rigorous testing of finished dies to ensure yield, performance, and reliability before shipment.",
+            "players": [
+              {"name": "ASE Group", "role": "World's largest outsourced semiconductor assembly and test (OSAT) provider"},
+              {"name": "Amkor Technology", "role": "Major OSAT company specializing in advanced packaging for mobile and automotive chips"},
+              {"name": "Teradyne", "role": "Leading supplier of automated test equipment (ATE) for semiconductor validation"},
+              {"name": "TSMC", "role": "Pioneering advanced packaging technologies like CoWoS and InFO for high-performance chips", "alsoIn": ["Wafer Fabrication"]}
+            ]
+          },
+          {
+            "name": "End Markets",
+            "description": "The downstream consumers of semiconductors, integrating chips into consumer electronics, data centers, automotive systems, and industrial equipment.",
+            "players": [
+              {"name": "Apple", "role": "Largest single consumer of leading-edge chips for iPhones, Macs, and wearables", "alsoIn": ["Chip Design"]},
+              {"name": "Microsoft", "role": "Major chip buyer for Xbox, Surface, and massive Azure data center infrastructure"},
+              {"name": "Tesla", "role": "Vertically integrated EV and AI company designing custom chips for autonomous driving"},
+              {"name": "Amazon (AWS)", "role": "Largest cloud provider driving demand for server CPUs, GPUs, and custom Graviton chips"}
+            ]
+          }
+        ]
+      },
+      "narrow": {
+        "focus": "AI Chip Design & Manufacturing",
+        "stages": [
+          {
+            "name": "Silicon Wafer Production",
+            "description": "Production of ultra-pure silicon wafers with precise crystalline structures required for advanced AI chip fabrication.",
+            "players": [
+              {"name": "Shin-Etsu Chemical", "role": "Produces 300mm silicon wafers with the purity levels needed for sub-5nm AI chips"},
+              {"name": "SUMCO", "role": "Supplies epitaxial wafers optimized for high-performance logic applications"},
+              {"name": "Siltronic", "role": "German wafer manufacturer serving advanced logic and AI chip fabs"}
+            ]
+          },
+          {
+            "name": "EDA & IP for AI Architectures",
+            "description": "Specialized design tools and licensed IP blocks for creating massively parallel AI accelerator architectures with billions of transistors.",
+            "players": [
+              {"name": "Synopsys", "role": "Provides AI-driven chip design tools and verification suites for complex AI accelerators"},
+              {"name": "Cadence", "role": "Offers Cerebrus AI-driven design flow optimized for large-die AI chip layouts"},
+              {"name": "Arm Holdings", "role": "Licenses CPU and NPU IP cores used in many AI chip designs including NVIDIA Grace"},
+              {"name": "Alphawave Semi", "role": "Provides high-speed connectivity IP (PCIe, die-to-die) essential for AI chip I/O"}
+            ]
+          },
+          {
+            "name": "AI Chip Architecture & Design",
+            "description": "Design of GPU, TPU, and custom AI accelerator silicon optimized for matrix multiplication, transformer inference, and large-scale training.",
+            "players": [
+              {"name": "NVIDIA", "role": "Designs Hopper and Blackwell GPU architectures purpose-built for AI training and inference"},
+              {"name": "Google (TPU)", "role": "Designs custom Tensor Processing Units optimized for its own AI workloads"},
+              {"name": "AMD", "role": "Designs Instinct MI-series accelerators challenging NVIDIA in AI data center compute"},
+              {"name": "Broadcom", "role": "Designs custom AI accelerators (XPUs) for hyperscale customers like Google and Meta"}
+            ]
+          },
+          {
+            "name": "Advanced Node Fabrication",
+            "description": "Manufacturing AI chips at cutting-edge process nodes (3nm, 2nm) requiring EUV lithography and extreme precision for maximum transistor density.",
+            "players": [
+              {"name": "TSMC", "role": "Fabricates the vast majority of leading AI chips including NVIDIA H100/B100 at advanced nodes"},
+              {"name": "Samsung Foundry", "role": "Manufactures AI chips at 3nm GAA node for select customers"},
+              {"name": "ASML", "role": "Supplies the High-NA EUV lithography systems enabling sub-2nm AI chip fabrication"},
+              {"name": "Intel Foundry", "role": "Building 18A process node capacity targeting future AI chip production"}
+            ]
+          },
+          {
+            "name": "Advanced Packaging & Integration",
+            "description": "3D stacking, chiplet integration, and CoWoS packaging that connects AI compute dies with high-bandwidth memory for maximum throughput.",
+            "players": [
+              {"name": "TSMC", "role": "Provides CoWoS and SoIC advanced packaging critical for NVIDIA and AMD AI chips", "alsoIn": ["Advanced Node Fabrication"]},
+              {"name": "ASE Group", "role": "Scales advanced packaging capacity to meet surging AI chip demand"},
+              {"name": "SK Hynix", "role": "Manufactures HBM (High Bandwidth Memory) stacks packaged alongside AI compute dies"},
+              {"name": "Micron", "role": "Produces HBM3E memory stacks essential for AI accelerator performance"}
+            ]
+          },
+          {
+            "name": "AI System & Server Assembly",
+            "description": "Integration of AI chips, HBM, networking, and cooling into complete GPU servers and AI training clusters.",
+            "players": [
+              {"name": "Super Micro Computer", "role": "Assembles GPU-optimized server platforms for AI training and inference workloads"},
+              {"name": "Dell Technologies", "role": "Builds enterprise AI server solutions featuring NVIDIA and AMD accelerators"},
+              {"name": "Foxconn", "role": "Contract manufacturer assembling NVIDIA DGX and HGX AI server systems at scale"},
+              {"name": "NVIDIA", "role": "Designs complete DGX and HGX AI systems built around its GPU platforms", "alsoIn": ["AI Chip Architecture & Design"]}
+            ]
+          },
+          {
+            "name": "Data Center Deployment",
+            "description": "Hyperscale and enterprise data centers deploying massive clusters of AI chips for model training and cloud AI services.",
+            "players": [
+              {"name": "Amazon (AWS)", "role": "Deploys tens of thousands of AI chips across its global data center fleet for cloud AI"},
+              {"name": "Microsoft Azure", "role": "Operates massive AI clusters powering OpenAI and enterprise AI services"},
+              {"name": "Google Cloud", "role": "Deploys both TPUs and NVIDIA GPUs across its AI-optimized data centers"},
+              {"name": "Meta", "role": "Building one of the largest AI compute clusters for Llama model training"}
+            ]
+          },
+          {
+            "name": "AI Inference at Edge",
+            "description": "Deploying optimized AI inference chips in edge devices, vehicles, and on-premise systems for low-latency, real-time AI processing.",
+            "players": [
+              {"name": "NVIDIA", "role": "Ships Jetson and Drive Orin platforms for edge AI in robotics and autonomous vehicles", "alsoIn": ["AI Chip Architecture & Design"]},
+              {"name": "Qualcomm", "role": "Embeds AI inference engines in Snapdragon chips for on-device AI in smartphones and PCs"},
+              {"name": "Apple", "role": "Deploys Neural Engine across all Apple Silicon for on-device AI inference"},
+              {"name": "Intel", "role": "Ships Gaudi and Movidius accelerators for edge AI inference workloads"}
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "artificial_intelligence",
+      "name": "Artificial Intelligence & ML",
+      "keywords": ["artificial intelligence", "ai", "machine learning", "ml", "deep learning", "neural network", "openai", "google", "chatgpt", "llm", "foundation model", "generative ai"],
+      "broad": {
+        "stages": [
+          {
+            "name": "Energy Production",
+            "description": "Power generation and delivery to massive data centers, as AI training runs consume enormous amounts of electricity.",
+            "players": [
+              {"name": "NextEra Energy", "role": "Largest renewable energy generator in North America, supplying clean power to data centers"},
+              {"name": "Constellation Energy", "role": "Signed landmark nuclear power agreement with Microsoft to supply carbon-free AI data center power"},
+              {"name": "Vistra Corp", "role": "Major power producer with nuclear and natural gas assets increasingly serving AI data center loads"},
+              {"name": "Eaton Corporation", "role": "Provides power management and distribution infrastructure for high-density AI data centers"}
+            ]
+          },
+          {
+            "name": "Chip Manufacturing",
+            "description": "Design and fabrication of GPUs, TPUs, and custom AI accelerators that provide the raw compute for training and inference.",
+            "players": [
+              {"name": "NVIDIA", "role": "Dominates AI training and inference with H100/B100 GPUs and CUDA software ecosystem"},
+              {"name": "TSMC", "role": "Manufactures virtually all leading AI chips at advanced process nodes"},
+              {"name": "AMD", "role": "Challenges NVIDIA with Instinct MI300X accelerators for AI data center workloads"},
+              {"name": "Broadcom", "role": "Designs custom AI accelerators (TPU, etc.) and networking ASICs for hyperscalers"}
+            ]
+          },
+          {
+            "name": "Data Centers & Cloud Infrastructure",
+            "description": "Hyperscale data centers providing the compute, storage, and networking infrastructure to train and serve AI models at scale.",
+            "players": [
+              {"name": "Amazon (AWS)", "role": "Largest cloud provider offering GPU instances, SageMaker, and Bedrock for AI workloads"},
+              {"name": "Microsoft Azure", "role": "Strategic OpenAI partner providing massive GPU clusters and Azure AI services"},
+              {"name": "Google Cloud", "role": "Offers TPU pods and GPU clusters plus Vertex AI platform for model training and deployment"},
+              {"name": "Oracle Cloud", "role": "Rapidly expanding AI infrastructure with large GPU superclusters for training workloads"},
+              {"name": "Equinix", "role": "Largest data center REIT providing colocation and interconnection for AI deployments"}
+            ]
+          },
+          {
+            "name": "Foundation Models & Platforms",
+            "description": "Development of large-scale pre-trained AI models (LLMs, vision, multimodal) that serve as the base for downstream applications.",
+            "players": [
+              {"name": "OpenAI", "role": "Creator of GPT-4, GPT-5, and DALL-E foundation models powering ChatGPT and API services"},
+              {"name": "Google DeepMind", "role": "Develops Gemini multimodal models and pioneering AI research across language, science, and reasoning"},
+              {"name": "Anthropic", "role": "Builds Claude foundation models focused on safety, helpfulness, and enterprise reliability"},
+              {"name": "Meta AI", "role": "Develops and open-sources Llama family of large language models for broad ecosystem adoption"},
+              {"name": "Mistral AI", "role": "European AI lab building efficient open-weight foundation models competitive with larger rivals"}
+            ]
+          },
+          {
+            "name": "AI Applications & End Users",
+            "description": "Software products and services built on top of foundation models, delivering AI capabilities to businesses and consumers.",
+            "players": [
+              {"name": "Microsoft (Copilot)", "role": "Embeds AI across Office 365, GitHub Copilot, and enterprise workflows reaching billions of users"},
+              {"name": "Salesforce (Einstein)", "role": "Integrates AI into CRM with Einstein GPT for sales, service, and marketing automation"},
+              {"name": "Adobe (Firefly)", "role": "Deploys generative AI for creative professionals across Photoshop, Illustrator, and Premiere"},
+              {"name": "ServiceNow", "role": "Embeds AI agents into IT service management and enterprise workflow automation"},
+              {"name": "Palantir", "role": "Delivers AI-powered analytics and decision platforms for government and enterprise customers"}
+            ]
+          }
+        ]
+      },
+      "narrow": {
+        "focus": "Large Language Models",
+        "stages": [
+          {
+            "name": "Data Collection & Curation",
+            "description": "Sourcing, cleaning, and curating massive text corpora from the web, books, code repositories, and licensed datasets for model training.",
+            "players": [
+              {"name": "Common Crawl", "role": "Non-profit providing petabytes of web crawl data used as a foundation for most LLM training sets"},
+              {"name": "Scale AI", "role": "Provides high-quality labeled data, RLHF annotations, and data curation services for LLM developers"},
+              {"name": "Hugging Face", "role": "Hosts thousands of open datasets and provides tools for dataset management and preprocessing"},
+              {"name": "Reddit", "role": "Licenses its vast corpus of human conversations and discussions for LLM training data"}
+            ]
+          },
+          {
+            "name": "Training Infrastructure",
+            "description": "GPU/TPU clusters, high-speed networking, and distributed training frameworks that enable training runs costing tens of millions of dollars.",
+            "players": [
+              {"name": "NVIDIA", "role": "Provides H100/B100 GPUs and NVLink/InfiniBand networking powering most LLM training clusters"},
+              {"name": "Microsoft Azure", "role": "Operates massive GPU supercomputers used by OpenAI for frontier model training"},
+              {"name": "Google Cloud (TPU)", "role": "Provides TPU v5p pods purpose-built for large-scale language model training"},
+              {"name": "CoreWeave", "role": "GPU cloud provider specializing in high-density AI training clusters for LLM developers"}
+            ]
+          },
+          {
+            "name": "Model Training & Pre-training",
+            "description": "The compute-intensive pre-training phase where models learn language patterns from trillions of tokens over weeks or months.",
+            "players": [
+              {"name": "OpenAI", "role": "Trains GPT-series models using proprietary techniques and massive Azure GPU clusters"},
+              {"name": "Google DeepMind", "role": "Pre-trains Gemini models across text, code, and multimodal data on TPU infrastructure"},
+              {"name": "Meta AI", "role": "Pre-trains Llama models and publishes research on efficient training methodologies"},
+              {"name": "Anthropic", "role": "Pre-trains Claude models with constitutional AI principles integrated into the training process"}
+            ]
+          },
+          {
+            "name": "RLHF & Alignment",
+            "description": "Post-training alignment using reinforcement learning from human feedback (RLHF) and other techniques to make models helpful, harmless, and honest.",
+            "players": [
+              {"name": "Anthropic", "role": "Pioneered constitutional AI and RLAIF techniques for scalable model alignment"},
+              {"name": "OpenAI", "role": "Developed and refined RLHF pipelines to align GPT models with human preferences"},
+              {"name": "Scale AI", "role": "Provides large-scale human feedback annotation and RLHF data labeling services"},
+              {"name": "Surge AI", "role": "Supplies expert human evaluators for preference ranking and safety red-teaming"}
+            ]
+          },
+          {
+            "name": "API Serving & Inference",
+            "description": "Optimized inference infrastructure serving billions of API requests with low latency using quantization, batching, and specialized hardware.",
+            "players": [
+              {"name": "OpenAI", "role": "Operates one of the largest LLM API platforms serving GPT models to millions of developers"},
+              {"name": "Anthropic", "role": "Serves Claude API with enterprise-grade reliability and safety guarantees"},
+              {"name": "Google (Vertex AI)", "role": "Provides managed Gemini API endpoints with enterprise security and scalability"},
+              {"name": "Together AI", "role": "Offers optimized inference for open-source LLMs with competitive pricing and speed"},
+              {"name": "Groq", "role": "Builds custom LPU inference chips delivering ultra-fast LLM serving speeds"}
+            ]
+          },
+          {
+            "name": "Application Layer",
+            "description": "Developer frameworks, RAG pipelines, and application platforms that integrate LLM capabilities into software products.",
+            "players": [
+              {"name": "LangChain", "role": "Leading open-source framework for building LLM-powered applications with RAG and agent capabilities"},
+              {"name": "Microsoft (Copilot Stack)", "role": "Provides Semantic Kernel and Copilot platform for enterprise LLM application development"},
+              {"name": "Pinecone", "role": "Vector database enabling retrieval-augmented generation (RAG) for LLM applications"},
+              {"name": "Databricks", "role": "Offers data lakehouse platform with integrated LLM fine-tuning and deployment tools"}
+            ]
+          },
+          {
+            "name": "End Users & Consumers",
+            "description": "Businesses and individuals using LLM-powered products for writing, coding, analysis, customer service, and creative work.",
+            "players": [
+              {"name": "ChatGPT (OpenAI)", "role": "Consumer and business LLM interface with hundreds of millions of monthly users"},
+              {"name": "Claude (Anthropic)", "role": "Enterprise and consumer AI assistant known for long-context analysis and coding"},
+              {"name": "GitHub Copilot", "role": "AI coding assistant used by millions of developers integrated directly in IDEs"},
+              {"name": "Perplexity", "role": "AI-powered search engine using LLMs to provide cited, conversational answers"}
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "pharmaceuticals",
+      "name": "Pharmaceuticals",
+      "keywords": ["pharmaceutical", "pharma", "drug", "biotech", "pfizer", "johnson", "lilly", "merck", "novartis", "clinical trial", "fda", "biologic", "mrna", "moderna"],
+      "broad": {
+        "stages": [
+          {
+            "name": "Drug Discovery",
+            "description": "Identification and validation of biological targets, followed by screening and optimization of candidate molecules using computational and experimental methods.",
+            "players": [
+              {"name": "Eli Lilly", "role": "Major pharma company with strong internal drug discovery programs across metabolic and neurological diseases"},
+              {"name": "Regeneron", "role": "Uses proprietary VelociSuite technology platform for rapid antibody drug discovery"},
+              {"name": "Schr\u00f6dinger", "role": "Provides physics-based computational drug discovery platforms used across the industry"},
+              {"name": "Recursion Pharmaceuticals", "role": "Uses AI and high-throughput biology to discover drug candidates at scale"}
+            ]
+          },
+          {
+            "name": "Preclinical & Clinical Trials",
+            "description": "Systematic testing of drug candidates first in laboratory and animal models, then in phased human clinical trials to establish safety and efficacy.",
+            "players": [
+              {"name": "IQVIA", "role": "World's largest contract research organization (CRO) managing clinical trials globally"},
+              {"name": "Charles River Laboratories", "role": "Leading preclinical CRO providing safety assessment and drug metabolism studies"},
+              {"name": "Medpace", "role": "Full-service CRO specializing in complex clinical trials for mid-size biopharma"},
+              {"name": "Veeva Systems", "role": "Provides cloud software for clinical data management, regulatory submissions, and trial operations"}
+            ]
+          },
+          {
+            "name": "Regulatory Approval",
+            "description": "Preparing and submitting regulatory filings (NDA/BLA) to agencies like the FDA and EMA, navigating review processes to obtain market authorization.",
+            "players": [
+              {"name": "Pfizer", "role": "Experienced in navigating global regulatory pathways with one of the largest drug portfolios"},
+              {"name": "Roche", "role": "Swiss pharma giant with deep regulatory expertise across oncology and diagnostics"},
+              {"name": "Parexel", "role": "Regulatory consulting and submission management services for pharma companies worldwide"},
+              {"name": "ICON plc", "role": "Global CRO providing regulatory strategy and submission support across all major markets"}
+            ]
+          },
+          {
+            "name": "Manufacturing",
+            "description": "Large-scale production of approved drugs, including active pharmaceutical ingredient (API) synthesis, formulation, fill-finish, and quality control.",
+            "players": [
+              {"name": "Lonza", "role": "Leading CDMO for biologics and small molecule manufacturing serving major pharma clients"},
+              {"name": "Catalent", "role": "Major CDMO providing drug formulation, fill-finish, and packaging services globally"},
+              {"name": "Samsung Biologics", "role": "World's largest biopharmaceutical contract manufacturer by capacity"},
+              {"name": "Thermo Fisher Scientific", "role": "Supplies pharma manufacturing equipment, reagents, and contract manufacturing services"}
+            ]
+          },
+          {
+            "name": "Distribution & Supply Chain",
+            "description": "Wholesale distribution, cold chain logistics, and pharmacy networks that deliver drugs from manufacturing sites to healthcare providers and patients.",
+            "players": [
+              {"name": "McKesson", "role": "Largest pharmaceutical distributor in North America handling one-third of all drugs dispensed"},
+              {"name": "AmerisourceBergen (Cencora)", "role": "Major drug wholesaler distributing branded and generic pharmaceuticals nationwide"},
+              {"name": "Cardinal Health", "role": "Distributes pharmaceuticals to hospitals, pharmacies, and health systems across the US"},
+              {"name": "CVS Health", "role": "Operates the largest pharmacy network in the US with integrated PBM and health services"}
+            ]
+          },
+          {
+            "name": "Patients & Providers",
+            "description": "Healthcare systems, providers, and patients who ultimately receive and benefit from pharmaceutical treatments.",
+            "players": [
+              {"name": "UnitedHealth Group", "role": "Largest US health insurer covering drug formulary decisions for over 150 million members"},
+              {"name": "HCA Healthcare", "role": "Largest for-profit hospital system in the US administering drugs across 180+ hospitals"},
+              {"name": "Walgreens Boots Alliance", "role": "Operates thousands of retail pharmacies dispensing prescriptions to millions of patients"},
+              {"name": "Express Scripts (Cigna)", "role": "Major pharmacy benefit manager (PBM) managing drug coverage and pricing for large populations"}
+            ]
+          }
+        ]
+      },
+      "narrow": {
+        "focus": "mRNA Therapeutics",
+        "stages": [
+          {
+            "name": "mRNA Platform R&D",
+            "description": "Fundamental research into mRNA sequence design, nucleoside modifications, and codon optimization to create stable, translatable mRNA constructs.",
+            "players": [
+              {"name": "Moderna", "role": "Pioneer of mRNA therapeutics with a platform spanning vaccines, oncology, and rare diseases"},
+              {"name": "BioNTech", "role": "German biotech that co-developed the first approved mRNA vaccine and expands into oncology mRNA"},
+              {"name": "CureVac", "role": "Develops optimized unmodified mRNA approaches for vaccines and protein therapies"},
+              {"name": "Arcturus Therapeutics", "role": "Develops self-amplifying mRNA (saRNA) technology for enhanced immune response"}
+            ]
+          },
+          {
+            "name": "Lipid Nanoparticle Delivery",
+            "description": "Engineering lipid nanoparticle (LNP) formulations that protect fragile mRNA molecules and deliver them into target cells efficiently.",
+            "players": [
+              {"name": "Alnylam Pharmaceuticals", "role": "Pioneered LNP delivery technology for RNA therapeutics with foundational IP portfolio"},
+              {"name": "Genevant Sciences", "role": "Develops proprietary LNP delivery systems licensed to multiple mRNA developers"},
+              {"name": "Moderna", "role": "Operates internal LNP development with proprietary ionizable lipid formulations", "alsoIn": ["mRNA Platform R&D"]},
+              {"name": "Precision NanoSystems (Cytiva)", "role": "Manufactures microfluidic mixing systems used to produce LNP-mRNA formulations at scale"}
+            ]
+          },
+          {
+            "name": "Clinical Trials",
+            "description": "Phase I-III clinical studies testing mRNA therapeutic candidates for safety, immunogenicity, and efficacy across target indications.",
+            "players": [
+              {"name": "Moderna", "role": "Runs one of the largest mRNA clinical pipelines with 40+ programs in development", "alsoIn": ["mRNA Platform R&D"]},
+              {"name": "BioNTech", "role": "Advancing mRNA oncology candidates through individualized neoantigen vaccine trials", "alsoIn": ["mRNA Platform R&D"]},
+              {"name": "IQVIA", "role": "CRO managing complex global mRNA vaccine and therapeutic clinical trials"},
+              {"name": "PPD (Thermo Fisher)", "role": "Provides clinical trial management and bioanalytical services for mRNA programs"}
+            ]
+          },
+          {
+            "name": "Manufacturing & Scale-Up",
+            "description": "GMP production of mRNA drug substance through in vitro transcription, followed by LNP encapsulation, fill-finish, and quality testing.",
+            "players": [
+              {"name": "Moderna", "role": "Operates dedicated mRNA manufacturing facilities in Norwood, MA and global expansion sites", "alsoIn": ["mRNA Platform R&D"]},
+              {"name": "BioNTech / Pfizer", "role": "Built one of the largest mRNA manufacturing networks producing billions of vaccine doses"},
+              {"name": "Lonza", "role": "Contract manufacturer providing large-scale mRNA drug substance production capacity"},
+              {"name": "Thermo Fisher Scientific", "role": "Supplies enzymes, nucleotides, and fill-finish services critical to mRNA manufacturing"}
+            ]
+          },
+          {
+            "name": "Cold Chain Distribution",
+            "description": "Ultra-cold and frozen supply chain logistics required to maintain mRNA product stability from factory to clinic, including -20C to -80C storage.",
+            "players": [
+              {"name": "FedEx", "role": "Invested in ultra-cold chain logistics capabilities for mRNA vaccine distribution globally"},
+              {"name": "UPS Healthcare", "role": "Operates dedicated cold chain facilities and freezer farms for mRNA product distribution"},
+              {"name": "McKesson", "role": "Managed centralized distribution of COVID-19 mRNA vaccines across the US government program"},
+              {"name": "World Courier (AmerisourceBergen)", "role": "Specialty logistics provider handling temperature-sensitive biologics including mRNA products"}
+            ]
+          },
+          {
+            "name": "Administration & Patient Access",
+            "description": "Final delivery of mRNA therapeutics to patients through healthcare systems, pharmacies, and vaccination centers worldwide.",
+            "players": [
+              {"name": "CVS Health", "role": "Administered millions of mRNA vaccine doses through its pharmacy and MinuteClinic network"},
+              {"name": "Walgreens", "role": "Major retail pharmacy partner for mRNA vaccine administration across the US"},
+              {"name": "UnitedHealth Group", "role": "Largest US insurer determining coverage and access policies for mRNA therapeutics"},
+              {"name": "WHO / Gavi", "role": "Coordinates global access and equitable distribution of mRNA vaccines to developing nations"}
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "oil_and_gas",
+      "name": "Oil & Gas",
+      "keywords": ["oil", "gas", "petroleum", "energy", "exxon", "chevron", "shell", "bp", "opec", "upstream", "midstream", "downstream", "refinery", "lng", "natural gas", "crude"],
+      "broad": {
+        "stages": [
+          {
+            "name": "Exploration",
+            "description": "Geological surveying, seismic analysis, and exploratory drilling to discover new oil and natural gas reserves onshore and offshore.",
+            "players": [
+              {"name": "SLB (Schlumberger)", "role": "World's largest oilfield services company providing exploration technology and seismic imaging"},
+              {"name": "Halliburton", "role": "Major oilfield services provider offering drilling, evaluation, and reservoir consulting"},
+              {"name": "TGS-NOPEC", "role": "Provides multi-client seismic data libraries and geological data to exploration companies"},
+              {"name": "CGG", "role": "Geoscience technology company offering seismic acquisition and subsurface imaging services"}
+            ]
+          },
+          {
+            "name": "Extraction & Production",
+            "description": "Drilling wells and producing crude oil and natural gas from conventional and unconventional (shale, deepwater) reservoirs.",
+            "players": [
+              {"name": "ExxonMobil", "role": "World's largest publicly traded oil producer operating across every major basin globally", "alsoIn": ["Refining"]},
+              {"name": "Chevron", "role": "Major integrated oil company with large Permian Basin and global offshore production", "alsoIn": ["Refining"]},
+              {"name": "ConocoPhillips", "role": "Largest independent E&P company focused on low-cost, high-return production assets"},
+              {"name": "Pioneer Natural Resources", "role": "Leading Permian Basin shale producer (now merging with ExxonMobil)"},
+              {"name": "Baker Hughes", "role": "Provides drilling equipment, completions technology, and production optimization services"}
+            ]
+          },
+          {
+            "name": "Midstream & Transportation",
+            "description": "Pipeline networks, storage terminals, and marine tankers that transport crude oil and natural gas from production sites to refineries and export facilities.",
+            "players": [
+              {"name": "Enterprise Products Partners", "role": "Largest US midstream company with 50,000 miles of pipelines for oil, gas, and NGLs"},
+              {"name": "Energy Transfer", "role": "Major pipeline operator transporting crude oil, natural gas, and refined products across the US"},
+              {"name": "Williams Companies", "role": "Operates Transco, the largest natural gas pipeline system in the United States"},
+              {"name": "Kinder Morgan", "role": "One of the largest energy infrastructure companies operating extensive pipeline and terminal networks"}
+            ]
+          },
+          {
+            "name": "Refining",
+            "description": "Processing crude oil into usable petroleum products including gasoline, diesel, jet fuel, petrochemicals, and lubricants.",
+            "players": [
+              {"name": "Valero Energy", "role": "World's largest independent refiner with 15 refineries processing 3.2 million barrels per day"},
+              {"name": "Marathon Petroleum", "role": "Largest US refiner by capacity, operating 13 refineries across the country"},
+              {"name": "Phillips 66", "role": "Major refiner and petrochemical producer with integrated midstream and chemicals operations"},
+              {"name": "ExxonMobil", "role": "Operates a global refining network with deep integration into petrochemical production", "alsoIn": ["Extraction & Production"]}
+            ]
+          },
+          {
+            "name": "Distribution & Retail",
+            "description": "Wholesale distribution and retail fuel stations that deliver gasoline, diesel, and other refined products to consumers and commercial customers.",
+            "players": [
+              {"name": "Shell", "role": "Operates one of the world's largest retail fuel station networks with 46,000+ locations globally"},
+              {"name": "BP", "role": "Major fuel retailer operating thousands of stations and supplying aviation and marine fuels"},
+              {"name": "TotalEnergies", "role": "European major with extensive retail fuel and convenience store network worldwide"},
+              {"name": "Pilot Travel Centers", "role": "Largest operator of travel centers and truck stops in North America (Berkshire Hathaway)"}
+            ]
+          },
+          {
+            "name": "End Use",
+            "description": "Final consumption of petroleum products in transportation, industrial processes, power generation, and petrochemical feedstock applications.",
+            "players": [
+              {"name": "Delta Air Lines", "role": "One of the largest consumers of jet fuel in the world for its global airline operations"},
+              {"name": "Dow Chemical", "role": "Major consumer of oil and gas feedstocks for plastics, chemicals, and materials production"},
+              {"name": "UPS", "role": "Massive fleet consumer of diesel fuel for its global logistics and delivery operations"},
+              {"name": "BASF", "role": "World's largest chemical company using petroleum feedstocks across its vast product portfolio"}
+            ]
+          }
+        ]
+      },
+      "narrow": {
+        "focus": "LNG Export",
+        "stages": [
+          {
+            "name": "Gas Exploration & Reserves",
+            "description": "Discovery and delineation of natural gas reserves, particularly in shale formations and offshore basins that supply LNG export projects.",
+            "players": [
+              {"name": "EQT Corporation", "role": "Largest natural gas producer in the US focused on Appalachian Marcellus Shale reserves"},
+              {"name": "Coterra Energy", "role": "Major Marcellus and Permian natural gas producer supplying feedstock to LNG facilities"},
+              {"name": "Chesapeake Energy", "role": "Leading Haynesville Shale gas producer strategically located near Gulf Coast LNG terminals"},
+              {"name": "SLB (Schlumberger)", "role": "Provides reservoir characterization and drilling technology for gas exploration programs"}
+            ]
+          },
+          {
+            "name": "Gas Production & Processing",
+            "description": "Extraction of raw natural gas and processing to remove impurities, water, and natural gas liquids to produce pipeline-quality dry gas.",
+            "players": [
+              {"name": "ExxonMobil", "role": "Major gas producer with integrated operations from wellhead to LNG export terminal"},
+              {"name": "Chevron", "role": "Produces and processes natural gas across the Permian, Haynesville, and global offshore assets"},
+              {"name": "DCP Midstream", "role": "One of the largest natural gas processors in the US extracting NGLs and delivering dry gas"},
+              {"name": "Targa Resources", "role": "Operates extensive gas gathering and processing infrastructure in major US producing regions"}
+            ]
+          },
+          {
+            "name": "Liquefaction",
+            "description": "Cooling natural gas to -260F at massive LNG export terminals, converting it to liquid form that occupies 1/600th of its gaseous volume for shipping.",
+            "players": [
+              {"name": "Cheniere Energy", "role": "Largest US LNG producer operating Sabine Pass and Corpus Christi liquefaction terminals"},
+              {"name": "Venture Global LNG", "role": "Developing multiple large-scale LNG export facilities using modular liquefaction technology"},
+              {"name": "Sempra Infrastructure", "role": "Building Port Arthur LNG, one of the largest LNG export projects in North America"},
+              {"name": "Baker Hughes", "role": "Manufactures LNG turbines and compression equipment used in major liquefaction trains"}
+            ]
+          },
+          {
+            "name": "LNG Shipping",
+            "description": "Transportation of liquefied natural gas aboard specialized cryogenic tanker vessels across ocean routes from export to import terminals.",
+            "players": [
+              {"name": "QatarEnergy", "role": "Owns one of the world's largest LNG shipping fleets and commissioned 100+ new LNG carriers"},
+              {"name": "Flex LNG", "role": "Operates a fleet of modern LNG carriers serving major trading routes globally"},
+              {"name": "GasLog Partners", "role": "Owns and operates LNG carriers under long-term charters for major LNG producers"},
+              {"name": "Samsung Heavy Industries", "role": "One of the world's leading shipbuilders constructing advanced LNG carrier vessels"}
+            ]
+          },
+          {
+            "name": "Regasification",
+            "description": "Receiving LNG at import terminals and converting it back to gaseous form through warming processes for injection into local pipeline networks.",
+            "players": [
+              {"name": "Excelerate Energy", "role": "Pioneer and operator of floating storage and regasification units (FSRUs) worldwide"},
+              {"name": "National Grid", "role": "Operates the Grain LNG import terminal, one of the largest regasification facilities in Europe"},
+              {"name": "JERA", "role": "Japan's largest power generator and LNG buyer operating multiple regasification terminals"},
+              {"name": "Kogas", "role": "Korean gas corporation operating the world's largest LNG receiving terminal network"}
+            ]
+          },
+          {
+            "name": "Distribution & End Use",
+            "description": "Delivery of regasified natural gas through pipeline networks to power plants, industrial facilities, and residential consumers in importing countries.",
+            "players": [
+              {"name": "Tokyo Gas", "role": "Japan's largest city gas utility distributing regasified LNG to millions of customers"},
+              {"name": "Engie", "role": "Major European gas utility distributing LNG-sourced gas and operating regasification assets"},
+              {"name": "PetroChina", "role": "Largest natural gas distributor in China, a rapidly growing LNG import market"},
+              {"name": "Naturgy", "role": "Spanish utility distributing natural gas sourced from global LNG imports across Iberia"}
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "renewable_energy",
+      "name": "Renewable Energy",
+      "keywords": ["renewable", "solar", "wind", "clean energy", "green energy", "first solar", "enphase", "nextera", "vestas", "photovoltaic", "turbine", "battery storage", "esg"],
+      "broad": {
+        "stages": [
+          {
+            "name": "Materials & Resources",
+            "description": "Mining and refining of critical materials like polysilicon, rare earth elements, copper, and lithium used in solar panels, wind turbines, and batteries.",
+            "players": [
+              {"name": "Albemarle", "role": "World's largest lithium producer supplying battery-grade lithium for energy storage systems"},
+              {"name": "MP Materials", "role": "Largest rare earth mining and processing company in the Western Hemisphere"},
+              {"name": "Daqo New Energy", "role": "Major producer of high-purity polysilicon used in solar cell manufacturing"},
+              {"name": "Freeport-McMoRan", "role": "Largest publicly traded copper producer, supplying copper essential for renewable energy wiring"}
+            ]
+          },
+          {
+            "name": "Component Manufacturing",
+            "description": "Manufacturing of solar panels, wind turbines, inverters, and battery storage systems that convert natural resources into electricity.",
+            "players": [
+              {"name": "First Solar", "role": "Largest US solar manufacturer producing thin-film cadmium telluride photovoltaic modules"},
+              {"name": "Vestas", "role": "World's largest wind turbine manufacturer by installed capacity globally"},
+              {"name": "Enphase Energy", "role": "Leading microinverter manufacturer for residential and commercial solar installations"},
+              {"name": "Tesla Energy", "role": "Manufactures Powerwall, Megapack battery storage systems and Solar Roof products"},
+              {"name": "Siemens Gamesa", "role": "Major offshore and onshore wind turbine manufacturer with global installations"}
+            ]
+          },
+          {
+            "name": "Project Development",
+            "description": "Site selection, permitting, financing, engineering, and construction of utility-scale solar farms, wind parks, and storage installations.",
+            "players": [
+              {"name": "NextEra Energy", "role": "World's largest generator of wind and solar energy with massive US project pipeline"},
+              {"name": "AES Corporation", "role": "Global renewable energy developer with a 60+ GW pipeline across solar, wind, and storage"},
+              {"name": "Brookfield Renewable", "role": "One of the world's largest publicly traded renewable power platforms with 31 GW capacity"},
+              {"name": "EDPR (EDP Renewables)", "role": "Major European renewable developer with growing US solar and offshore wind portfolio"}
+            ]
+          },
+          {
+            "name": "Grid Infrastructure",
+            "description": "Transmission lines, substations, smart grid technology, and grid-scale storage that integrate intermittent renewable generation into the power system.",
+            "players": [
+              {"name": "Quanta Services", "role": "Largest US electrical grid contractor building transmission lines and substations for renewables"},
+              {"name": "Eaton Corporation", "role": "Provides grid power management, switchgear, and energy storage integration solutions"},
+              {"name": "Fluence Energy", "role": "Leading grid-scale battery storage integrator (joint venture of Siemens and AES)"},
+              {"name": "Itron", "role": "Provides smart grid infrastructure and energy management software for utilities"}
+            ]
+          },
+          {
+            "name": "End Use & Offtakers",
+            "description": "Utilities, corporations, and consumers who purchase and consume renewable electricity through PPAs, retail programs, and behind-the-meter installations.",
+            "players": [
+              {"name": "Amazon", "role": "World's largest corporate buyer of renewable energy with 500+ solar and wind projects"},
+              {"name": "Google", "role": "Committed to running on 24/7 carbon-free energy across all data centers and offices"},
+              {"name": "Southern Company", "role": "Major US utility integrating large-scale renewable generation into its regulated service territory"},
+              {"name": "Xcel Energy", "role": "First major US utility to commit to 100% carbon-free electricity by 2050"}
+            ]
+          }
+        ]
+      },
+      "narrow": {
+        "focus": "Solar Energy",
+        "stages": [
+          {
+            "name": "Polysilicon Production",
+            "description": "Purification of metallurgical-grade silicon into ultra-high-purity polysilicon ingots, the foundational raw material for crystalline silicon solar cells.",
+            "players": [
+              {"name": "Tongwei", "role": "World's largest polysilicon producer with over 350,000 MT annual capacity"},
+              {"name": "Daqo New Energy", "role": "Leading high-purity polysilicon manufacturer supplying major wafer and cell producers"},
+              {"name": "Wacker Chemie", "role": "German chemical company and one of the world's top polysilicon producers for solar"},
+              {"name": "REC Silicon", "role": "US-based polysilicon manufacturer restarting production to serve domestic solar supply chain"}
+            ]
+          },
+          {
+            "name": "Wafer & Cell Manufacturing",
+            "description": "Slicing polysilicon into thin wafers and processing them into photovoltaic cells through doping, texturing, and anti-reflective coating.",
+            "players": [
+              {"name": "LONGi Green Energy", "role": "World's largest solar wafer and cell manufacturer pioneering monocrystalline PERC and TOPCon technology"},
+              {"name": "JA Solar", "role": "Major vertically integrated solar cell and module manufacturer with global production"},
+              {"name": "Trina Solar", "role": "Leading solar cell manufacturer with 210mm large-format cell technology"},
+              {"name": "First Solar", "role": "Manufactures thin-film CdTe solar cells as an alternative to crystalline silicon technology"}
+            ]
+          },
+          {
+            "name": "Module Assembly",
+            "description": "Encapsulating solar cells into weatherproof photovoltaic modules with glass, EVA, backsheet, and junction boxes for field deployment.",
+            "players": [
+              {"name": "Canadian Solar", "role": "Top-5 global solar module manufacturer shipping to over 160 countries"},
+              {"name": "JinkoSolar", "role": "World's largest solar module manufacturer by annual shipment volume"},
+              {"name": "First Solar", "role": "Largest US-based module manufacturer with vertically integrated thin-film production", "alsoIn": ["Wafer & Cell Manufacturing"]},
+              {"name": "Qcells (Hanwha)", "role": "Major module manufacturer with US factory expansion in Georgia serving domestic demand"}
+            ]
+          },
+          {
+            "name": "Project Development & EPC",
+            "description": "Site acquisition, permitting, financing, engineering, procurement, and construction of utility-scale and distributed solar installations.",
+            "players": [
+              {"name": "NextEra Energy", "role": "Largest solar project developer in the US with massive utility-scale portfolio"},
+              {"name": "Lightsource bp", "role": "Global utility-scale solar developer and operator backed by BP"},
+              {"name": "Invenergy", "role": "Leading independent US solar developer with a 25+ GW pipeline of projects"},
+              {"name": "Array Technologies", "role": "Major solar tracker manufacturer enabling single-axis tracking systems for utility-scale projects"}
+            ]
+          },
+          {
+            "name": "Inverters & Balance of System",
+            "description": "DC-to-AC power conversion equipment, racking, wiring, and monitoring systems that complete the solar installation alongside the modules.",
+            "players": [
+              {"name": "Enphase Energy", "role": "Leading residential microinverter manufacturer with integrated monitoring and battery systems"},
+              {"name": "SolarEdge Technologies", "role": "Major power optimizer and inverter supplier for residential and commercial solar"},
+              {"name": "SMA Solar Technology", "role": "German inverter manufacturer serving utility, commercial, and residential solar markets"},
+              {"name": "Shoals Technologies", "role": "Provides electrical BOS solutions including combiner boxes, harnesses, and interconnection systems"}
+            ]
+          },
+          {
+            "name": "Grid Connection & Storage",
+            "description": "Interconnecting solar projects to the electrical grid and pairing them with battery storage to manage intermittency and provide dispatchable power.",
+            "players": [
+              {"name": "Fluence Energy", "role": "Grid-scale battery storage integrator deploying solar-plus-storage projects worldwide"},
+              {"name": "Tesla Energy", "role": "Manufactures Megapack utility-scale battery systems commonly paired with solar farms"},
+              {"name": "Quanta Services", "role": "Builds high-voltage transmission infrastructure connecting remote solar farms to load centers"},
+              {"name": "Stem Inc.", "role": "AI-powered energy storage optimization platform for solar-plus-storage projects"}
+            ]
+          },
+          {
+            "name": "Offtakers & Consumers",
+            "description": "Utilities, corporations, and homeowners who purchase solar electricity through PPAs, net metering, community solar, and retail programs.",
+            "players": [
+              {"name": "Sunrun", "role": "Largest US residential solar and battery storage installer with over 900,000 customers"},
+              {"name": "Amazon", "role": "Largest corporate solar energy buyer globally through power purchase agreements"},
+              {"name": "Southern Company", "role": "Major utility offtaker contracting solar generation for its regulated customer base"},
+              {"name": "Sunnova Energy", "role": "Residential solar and storage service provider offering leases and PPAs to homeowners"}
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "electric_vehicles",
+      "name": "Electric Vehicles",
+      "keywords": ["electric vehicle", "ev", "tesla", "rivian", "lucid", "byd", "battery", "lithium", "charging", "catl", "panasonic", "autonomous", "evse"],
+      "broad": {
+        "stages": [
+          {
+            "name": "Mining & Raw Materials",
+            "description": "Extraction and processing of lithium, cobalt, nickel, manganese, and graphite that form the critical materials for EV batteries.",
+            "players": [
+              {"name": "Albemarle", "role": "World's largest lithium producer with operations in Chile, Australia, and the US"},
+              {"name": "Sociedad Quimica y Minera (SQM)", "role": "Major Chilean lithium producer extracting from the Atacama salt flat"},
+              {"name": "Glencore", "role": "World's largest cobalt producer and major nickel miner supplying EV battery supply chains"},
+              {"name": "Pilbara Minerals", "role": "Major Australian spodumene lithium miner supplying battery-grade lithium feedstock"}
+            ]
+          },
+          {
+            "name": "Battery Manufacturing",
+            "description": "Production of battery cells, modules, and packs including cathode, anode, electrolyte, and separator manufacturing for EV powertrains.",
+            "players": [
+              {"name": "CATL", "role": "World's largest EV battery manufacturer supplying Tesla, BMW, Mercedes, and many others"},
+              {"name": "LG Energy Solution", "role": "Major battery cell producer supplying GM, Hyundai, and Tesla with pouch and cylindrical cells"},
+              {"name": "Panasonic", "role": "Long-time Tesla battery partner producing cylindrical cells at Nevada and Kansas gigafactories"},
+              {"name": "BYD", "role": "Vertically integrated Chinese EV and battery maker with Blade Battery LFP technology", "alsoIn": ["Vehicle Assembly"]},
+              {"name": "Samsung SDI", "role": "Major battery cell manufacturer supplying BMW, Rivian, and other global automakers"}
+            ]
+          },
+          {
+            "name": "Vehicle Assembly",
+            "description": "Design, engineering, and assembly of complete electric vehicles including powertrain integration, body manufacturing, and final quality testing.",
+            "players": [
+              {"name": "Tesla", "role": "World's most valuable automaker and EV leader producing vehicles across four gigafactories"},
+              {"name": "BYD", "role": "World's largest EV manufacturer by volume with vertically integrated battery-to-vehicle production", "alsoIn": ["Battery Manufacturing"]},
+              {"name": "Volkswagen Group", "role": "Largest legacy automaker EV transition with dedicated MEB platform across VW, Audi, Porsche"},
+              {"name": "Rivian", "role": "US EV startup producing electric trucks and SUVs plus Amazon delivery vans"},
+              {"name": "Hyundai/Kia", "role": "Fast-growing EV lineup on E-GMP platform with Ioniq and EV series models"}
+            ]
+          },
+          {
+            "name": "Charging Infrastructure",
+            "description": "Deployment and operation of EV charging networks including Level 2 AC chargers, DC fast chargers, and home charging equipment.",
+            "players": [
+              {"name": "Tesla Supercharger", "role": "Largest fast-charging network globally with NACS connector becoming the US industry standard"},
+              {"name": "ChargePoint", "role": "Largest publicly traded EV charging network operator with 200,000+ activated ports"},
+              {"name": "ABB E-Mobility", "role": "Global leader in DC fast charging hardware manufacturing for commercial and public networks"},
+              {"name": "EVgo", "role": "Operates one of the largest public DC fast charging networks in the US"}
+            ]
+          },
+          {
+            "name": "End Use & Services",
+            "description": "EV ownership experience including insurance, fleet management, autonomous driving features, over-the-air updates, and battery recycling.",
+            "players": [
+              {"name": "Tesla", "role": "Leads in connected EV services including OTA updates, FSD, and integrated insurance", "alsoIn": ["Vehicle Assembly"]},
+              {"name": "Li-Cycle", "role": "Leading EV battery recycler recovering lithium, nickel, and cobalt from end-of-life batteries"},
+              {"name": "Geotab", "role": "Major fleet telematics provider helping commercial fleets manage EV transition and optimization"},
+              {"name": "Redwood Materials", "role": "Founded by ex-Tesla CTO, recycling EV batteries to create closed-loop battery material supply"}
+            ]
+          }
+        ]
+      },
+      "narrow": {
+        "focus": "EV Battery Supply Chain",
+        "stages": [
+          {
+            "name": "Lithium Mining & Refining",
+            "description": "Extraction of lithium from brine pools and hard rock deposits, followed by chemical processing into battery-grade lithium carbonate and lithium hydroxide.",
+            "players": [
+              {"name": "Albemarle", "role": "World's largest lithium producer with brine operations in Chile and hard rock in Australia"},
+              {"name": "SQM", "role": "Major lithium producer operating in the Atacama salt flat with low-cost brine extraction"},
+              {"name": "Ganfeng Lithium", "role": "China's largest lithium producer with integrated mining-to-refining operations globally"},
+              {"name": "Livent (Arcadium Lithium)", "role": "Produces battery-grade lithium hydroxide from Argentine brine operations"}
+            ]
+          },
+          {
+            "name": "Cathode & Anode Production",
+            "description": "Manufacturing of cathode active materials (NMC, NCA, LFP) and anode materials (graphite, silicon) that determine battery chemistry, energy density, and cost.",
+            "players": [
+              {"name": "Umicore", "role": "Leading cathode material producer for NMC chemistries used in high-performance EV batteries"},
+              {"name": "BASF Battery Materials", "role": "Major producer of cathode active materials with global production facilities for EV batteries"},
+              {"name": "Shanshan Technology", "role": "China's largest anode material manufacturer producing graphite for lithium-ion batteries"},
+              {"name": "Posco Future M", "role": "Korean cathode and anode material manufacturer integrated with Posco's mining assets"}
+            ]
+          },
+          {
+            "name": "Cell Manufacturing",
+            "description": "Assembly of cathode, anode, separator, and electrolyte into individual battery cells in cylindrical, prismatic, or pouch formats at gigafactory scale.",
+            "players": [
+              {"name": "CATL", "role": "Produces more EV battery cells than any other company globally with over 35% market share"},
+              {"name": "LG Energy Solution", "role": "Major cell manufacturer operating gigafactories in Korea, US, Europe, and China"},
+              {"name": "Panasonic", "role": "Produces 4680 and 2170 cylindrical cells primarily for Tesla at US gigafactories"},
+              {"name": "Samsung SDI", "role": "Manufactures prismatic and cylindrical cells for BMW, Stellantis, and other OEMs"},
+              {"name": "SK On", "role": "Fast-growing Korean cell manufacturer building US factories to supply Ford and Hyundai"}
+            ]
+          },
+          {
+            "name": "Pack Assembly & BMS",
+            "description": "Combining individual cells into modules and packs with thermal management, structural housing, and battery management systems (BMS) for vehicle integration.",
+            "players": [
+              {"name": "Tesla", "role": "Designs structural battery packs integrated into vehicle chassis with proprietary BMS"},
+              {"name": "BYD", "role": "Produces cell-to-pack Blade Battery systems eliminating module level for space and cost efficiency"},
+              {"name": "Dana Incorporated", "role": "Supplies battery cooling systems and thermal management solutions for EV battery packs"},
+              {"name": "Sensata Technologies", "role": "Provides battery management system sensors and safety monitoring for EV packs"}
+            ]
+          },
+          {
+            "name": "Vehicle Integration",
+            "description": "Installation of battery packs into vehicle platforms including electrical integration, power electronics, electric motors, and drivetrain assembly.",
+            "players": [
+              {"name": "Tesla", "role": "Pioneers integrated battery-to-vehicle manufacturing with structural pack in Model Y and Cybertruck", "alsoIn": ["Pack Assembly & BMS"]},
+              {"name": "BorgWarner", "role": "Major supplier of EV drive modules, power electronics, and integrated eDrive systems"},
+              {"name": "Magna International", "role": "Contract manufacturer and tier-1 supplier providing complete EV platforms and eDrive systems"},
+              {"name": "Nidec", "role": "World's largest motor manufacturer producing traction motors for electric vehicles"}
+            ]
+          },
+          {
+            "name": "Charging Infrastructure",
+            "description": "Hardware and networks for recharging EV batteries including home, workplace, and public DC fast charging stations.",
+            "players": [
+              {"name": "Tesla Supercharger", "role": "Operates 60,000+ Supercharger connectors globally and licenses NACS standard to industry"},
+              {"name": "ChargePoint", "role": "Largest EV charging network operator with extensive Level 2 and DC fast charging portfolio"},
+              {"name": "ABB E-Mobility", "role": "Manufactures Terra fast chargers deployed by major charging networks worldwide"},
+              {"name": "Electrify America", "role": "VW-funded DC fast charging network building out highway and metro charging corridors"}
+            ]
+          },
+          {
+            "name": "Battery Recycling",
+            "description": "End-of-life battery collection, disassembly, and hydrometallurgical or pyrometallurgical processing to recover valuable cathode metals for reuse in new batteries.",
+            "players": [
+              {"name": "Redwood Materials", "role": "Leading US battery recycler producing recycled cathode and anode copper foil for cell manufacturers"},
+              {"name": "Li-Cycle", "role": "Operates spoke-and-hub battery recycling model recovering lithium, nickel, cobalt, and manganese"},
+              {"name": "Umicore", "role": "European leader in battery recycling with integrated closed-loop cathode material production", "alsoIn": ["Cathode & Anode Production"]},
+              {"name": "Cirba Solutions", "role": "Largest battery recycler in North America processing EV and consumer electronics batteries"}
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "fintech",
+      "name": "Fintech",
+      "keywords": ["fintech", "financial technology", "payments", "visa", "mastercard", "paypal", "stripe", "square", "block", "neobank", "digital banking", "cryptocurrency", "blockchain"],
+      "broad": {
+        "stages": [
+          {
+            "name": "Banking Infrastructure",
+            "description": "Core banking systems, ledger technology, regulatory frameworks, and the foundational financial plumbing that underpins all digital financial services.",
+            "players": [
+              {"name": "FIS (Fidelity National Information Services)", "role": "Largest banking technology provider processing trillions in transactions annually for global banks"},
+              {"name": "Fiserv", "role": "Major financial technology provider powering core banking, payments, and merchant services"},
+              {"name": "Jack Henry & Associates", "role": "Core banking technology provider serving community banks and credit unions across the US"},
+              {"name": "Temenos", "role": "Leading cloud-native core banking software provider serving 3,000+ banks worldwide"}
+            ]
+          },
+          {
+            "name": "Payment Rails & Networks",
+            "description": "Card networks, ACH systems, real-time payment rails, and cross-border transfer networks that move money between institutions and accounts.",
+            "players": [
+              {"name": "Visa", "role": "Largest global payment network processing over $14 trillion in annual transaction volume"},
+              {"name": "Mastercard", "role": "Second-largest card network with services spanning payments, cybersecurity, and data analytics"},
+              {"name": "The Clearing House", "role": "Operates RTP real-time payment network and ACH clearing for major US banks"},
+              {"name": "SWIFT", "role": "Global messaging network connecting 11,000+ financial institutions for cross-border payments"}
+            ]
+          },
+          {
+            "name": "Digital Platforms & Middleware",
+            "description": "APIs, payment gateways, banking-as-a-service platforms, and integration middleware that enable developers to embed financial services into applications.",
+            "players": [
+              {"name": "Stripe", "role": "Leading payments API platform enabling millions of businesses to accept online payments globally"},
+              {"name": "Plaid", "role": "Financial data API connecting thousands of fintech apps to user bank accounts for verification"},
+              {"name": "Adyen", "role": "Global payment platform providing unified commerce solutions for enterprises like Microsoft and Uber"},
+              {"name": "Marqeta", "role": "Modern card issuing platform enabling companies to create and manage virtual and physical cards via API"}
+            ]
+          },
+          {
+            "name": "End User Products",
+            "description": "Consumer and business-facing financial products including neobanks, digital wallets, lending platforms, and investment apps.",
+            "players": [
+              {"name": "PayPal", "role": "Largest digital wallet and P2P payment platform with 430+ million active accounts worldwide"},
+              {"name": "Block (Square)", "role": "Operates Square merchant platform and Cash App consumer financial ecosystem"},
+              {"name": "Robinhood", "role": "Commission-free trading platform that democratized retail investing for millions of users"},
+              {"name": "SoFi Technologies", "role": "Digital financial services platform offering banking, lending, investing, and insurance"},
+              {"name": "Nubank", "role": "World's largest digital bank by customer count serving 90+ million customers in Latin America"}
+            ]
+          }
+        ]
+      },
+      "narrow": {
+        "focus": "Digital Payments",
+        "stages": [
+          {
+            "name": "Card Networks",
+            "description": "Global payment networks that set interchange rules, authorize transactions, and provide the backbone for card-based digital payment flows.",
+            "players": [
+              {"name": "Visa", "role": "Processes billions of transactions annually across its global VisaNet network in 200+ countries"},
+              {"name": "Mastercard", "role": "Operates the second-largest card network with growing data analytics and cybersecurity services"},
+              {"name": "American Express", "role": "Operates a closed-loop network acting as both card issuer and network for premium customers"},
+              {"name": "UnionPay", "role": "China's dominant card network and the world's largest by number of cards issued"}
+            ]
+          },
+          {
+            "name": "Payment Gateways",
+            "description": "Technology platforms that securely capture, tokenize, and transmit payment data from merchants to payment processors for authorization.",
+            "players": [
+              {"name": "Stripe", "role": "Leading online payment gateway processing hundreds of billions for internet businesses globally"},
+              {"name": "Adyen", "role": "Enterprise payment gateway providing unified online, in-store, and mobile payment acceptance"},
+              {"name": "Braintree (PayPal)", "role": "Payment gateway powering checkout for Uber, Airbnb, and other major digital platforms"},
+              {"name": "Checkout.com", "role": "Cloud-native payment gateway offering high-performance processing for enterprise merchants"}
+            ]
+          },
+          {
+            "name": "Payment Processors",
+            "description": "Companies that route transactions between merchants, card networks, and issuing banks, handling authorization, clearing, and settlement.",
+            "players": [
+              {"name": "FIS (Worldpay)", "role": "One of the world's largest payment processors handling merchant acquiring and issuer processing"},
+              {"name": "Fiserv (First Data)", "role": "Major payment processor serving millions of merchant locations through its acquiring platforms"},
+              {"name": "Global Payments", "role": "Leading worldwide payment technology company processing transactions across 170+ countries"},
+              {"name": "TSYS (Global Payments)", "role": "Major issuer processor managing card portfolios for banks and financial institutions"}
+            ]
+          },
+          {
+            "name": "Merchant Acquiring",
+            "description": "Services that onboard merchants, provide payment acceptance capability, and manage the merchant-side relationship in the payment flow.",
+            "players": [
+              {"name": "Block (Square)", "role": "Provides hardware, software, and financial services enabling small businesses to accept card payments"},
+              {"name": "Toast", "role": "Restaurant-focused payment platform providing POS, online ordering, and payment acceptance"},
+              {"name": "Shift4 Payments", "role": "End-to-end payment processing for hospitality, restaurants, and entertainment venues"},
+              {"name": "SumUp", "role": "European SMB payment acceptance platform with mobile card readers and POS solutions"}
+            ]
+          },
+          {
+            "name": "POS & Checkout",
+            "description": "Point-of-sale hardware and software, digital wallets, and checkout experiences where consumers initiate payments in-store and online.",
+            "players": [
+              {"name": "Apple Pay", "role": "Dominant mobile wallet using NFC for contactless payments across billions of Apple devices"},
+              {"name": "Google Pay", "role": "Mobile wallet and online payment method integrated across Android and web platforms"},
+              {"name": "Shopify", "role": "Provides unified online and in-store checkout experience through Shop Pay and Shopify POS"},
+              {"name": "Verifone", "role": "Major POS terminal manufacturer deployed at millions of retail locations worldwide"}
+            ]
+          },
+          {
+            "name": "Fraud Detection & Security",
+            "description": "Real-time transaction monitoring, machine learning fraud detection, identity verification, and compliance tools protecting the payment ecosystem.",
+            "players": [
+              {"name": "Visa (CyberSource)", "role": "Provides AI-driven fraud detection and payment security services for merchants and issuers"},
+              {"name": "Featurespace", "role": "Uses adaptive behavioral analytics and machine learning for real-time payment fraud prevention"},
+              {"name": "Sardine", "role": "Fraud prevention platform specializing in detecting payment fraud and money laundering patterns"},
+              {"name": "Socure", "role": "AI-powered identity verification and fraud prevention platform for digital payment onboarding"}
+            ]
+          },
+          {
+            "name": "Settlement & Reconciliation",
+            "description": "Final clearing and settlement of funds between acquiring banks, issuing banks, and merchants, typically within 1-2 business days.",
+            "players": [
+              {"name": "The Clearing House", "role": "Operates RTP and ACH clearing infrastructure settling trillions in US payments annually"},
+              {"name": "Mastercard (Vocalink)", "role": "Processes real-time account-to-account payments and batch clearing in multiple countries"},
+              {"name": "ACI Worldwide", "role": "Provides real-time payment and settlement software to banks and payment processors globally"},
+              {"name": "Finastra", "role": "Supplies payment clearing and settlement technology to banks and financial institutions worldwide"}
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "cybersecurity",
+      "name": "Cybersecurity",
+      "keywords": ["cybersecurity", "security", "infosec", "crowdstrike", "palo alto", "fortinet", "zscaler", "firewall", "endpoint", "siem", "zero trust", "threat intelligence", "ransomware"],
+      "broad": {
+        "stages": [
+          {
+            "name": "Threat Intelligence",
+            "description": "Collection, analysis, and dissemination of information about current and emerging cyber threats, vulnerabilities, and adversary tactics.",
+            "players": [
+              {"name": "CrowdStrike", "role": "Leading threat intelligence provider with Falcon platform tracking adversaries across the globe"},
+              {"name": "Mandiant (Google Cloud)", "role": "Premier incident response and threat intelligence firm known for uncovering nation-state attacks"},
+              {"name": "Recorded Future", "role": "AI-powered threat intelligence platform providing real-time analysis of the threat landscape"},
+              {"name": "Microsoft Threat Intelligence", "role": "Leverages trillions of daily signals from its ecosystem to identify and track threat actors"}
+            ]
+          },
+          {
+            "name": "Prevention & Protection",
+            "description": "Security tools and architectures that prevent attacks before they succeed, including firewalls, identity management, email security, and zero trust frameworks.",
+            "players": [
+              {"name": "Palo Alto Networks", "role": "Largest pure-play cybersecurity company offering next-gen firewalls, SASE, and cloud security"},
+              {"name": "Fortinet", "role": "Major network security vendor with FortiGate firewalls securing millions of enterprise networks"},
+              {"name": "Zscaler", "role": "Leading zero trust network access platform securing internet traffic for enterprise workforces"},
+              {"name": "Okta", "role": "Dominant identity and access management platform providing zero trust identity security"},
+              {"name": "Proofpoint", "role": "Leading email security provider protecting against phishing, BEC, and social engineering attacks"}
+            ]
+          },
+          {
+            "name": "Detection & Monitoring",
+            "description": "Continuous monitoring of networks, endpoints, and cloud environments to detect malicious activity, anomalies, and policy violations in real time.",
+            "players": [
+              {"name": "CrowdStrike", "role": "Falcon platform provides AI-native endpoint detection and response (EDR) with 24/7 monitoring", "alsoIn": ["Threat Intelligence"]},
+              {"name": "SentinelOne", "role": "AI-powered XDR platform providing autonomous detection and response across endpoints and cloud"},
+              {"name": "Splunk (Cisco)", "role": "Dominant SIEM platform collecting and analyzing security telemetry for threat detection"},
+              {"name": "Datadog", "role": "Provides cloud security monitoring, CSPM, and application security observability at scale"}
+            ]
+          },
+          {
+            "name": "Response & Remediation",
+            "description": "Incident response capabilities that contain, investigate, and remediate security breaches, including digital forensics and automated response playbooks.",
+            "players": [
+              {"name": "Palo Alto Networks (Cortex XSOAR)", "role": "Provides security orchestration, automation, and response (SOAR) for incident handling"},
+              {"name": "CrowdStrike (Falcon Complete)", "role": "Managed detection and response (MDR) service with hands-on threat remediation"},
+              {"name": "Mandiant (Google Cloud)", "role": "World-renowned incident response team handling the most complex breaches for governments and enterprises", "alsoIn": ["Threat Intelligence"]},
+              {"name": "Secureworks", "role": "Managed security services provider offering 24/7 threat detection and incident response"}
+            ]
+          },
+          {
+            "name": "Recovery & Resilience",
+            "description": "Post-incident recovery, business continuity planning, data backup, and cyber insurance that help organizations bounce back from security incidents.",
+            "players": [
+              {"name": "Rubrik", "role": "Leading cyber resilience platform providing immutable backups and ransomware recovery capabilities"},
+              {"name": "Cohesity", "role": "Data management and backup platform with AI-powered ransomware detection and clean room recovery"},
+              {"name": "Veeam", "role": "Enterprise backup and recovery leader providing cyber resilience for hybrid cloud environments"},
+              {"name": "Beazley", "role": "Major cyber insurance underwriter covering breach costs, ransomware payments, and business interruption"}
+            ]
+          }
+        ]
+      },
+      "narrow": {
+        "focus": "Cloud Security",
+        "stages": [
+          {
+            "name": "Cloud Infrastructure Security",
+            "description": "Securing the foundational cloud infrastructure including hypervisor, host OS, and physical data center controls provided by cloud service providers.",
+            "players": [
+              {"name": "Amazon (AWS Security)", "role": "Provides foundational cloud security services including GuardDuty, Security Hub, and IAM"},
+              {"name": "Microsoft (Azure Security)", "role": "Offers Defender for Cloud, Sentinel SIEM, and comprehensive Azure security controls"},
+              {"name": "Google Cloud (Security)", "role": "Provides BeyondCorp zero trust, Chronicle SIEM, and Mandiant threat intelligence integration"},
+              {"name": "Orca Security", "role": "Agentless cloud security platform providing deep visibility into cloud infrastructure risks"}
+            ]
+          },
+          {
+            "name": "Identity & Access Management",
+            "description": "Authentication, authorization, and privilege management ensuring only verified users and services can access cloud resources with least-privilege principles.",
+            "players": [
+              {"name": "Okta", "role": "Leading cloud identity provider with SSO, MFA, and lifecycle management for workforce and customers"},
+              {"name": "CyberArk", "role": "Dominant privileged access management (PAM) platform securing cloud admin and service accounts"},
+              {"name": "Ping Identity", "role": "Enterprise identity platform providing intelligent access management for hybrid cloud environments"},
+              {"name": "Beyond Identity", "role": "Passwordless authentication platform eliminating credential-based attacks in cloud environments"}
+            ]
+          },
+          {
+            "name": "Network Security",
+            "description": "Protecting cloud network perimeters and east-west traffic with microsegmentation, SASE, cloud firewalls, and secure connectivity.",
+            "players": [
+              {"name": "Zscaler", "role": "Leading SASE platform providing zero trust network access and secure internet gateway for cloud"},
+              {"name": "Palo Alto Networks (Prisma Access)", "role": "Comprehensive SASE solution with cloud-delivered firewall and SD-WAN capabilities"},
+              {"name": "Cloudflare", "role": "Provides cloud WAF, DDoS protection, and zero trust networking for cloud applications"},
+              {"name": "Illumio", "role": "Microsegmentation platform preventing lateral movement of attackers within cloud workloads"}
+            ]
+          },
+          {
+            "name": "Workload Protection",
+            "description": "Securing cloud-native workloads including containers, Kubernetes, serverless functions, and virtual machines from runtime threats and vulnerabilities.",
+            "players": [
+              {"name": "Wiz", "role": "Fastest-growing cloud security company providing agentless workload scanning and risk prioritization"},
+              {"name": "CrowdStrike (Falcon Cloud Security)", "role": "Extends endpoint protection to cloud workloads with runtime threat detection across containers and K8s"},
+              {"name": "Sysdig", "role": "Cloud-native security platform for runtime threat detection and vulnerability management in containers"},
+              {"name": "Aqua Security", "role": "Provides full lifecycle security for containers, Kubernetes, and cloud-native applications"}
+            ]
+          },
+          {
+            "name": "Data Security",
+            "description": "Protecting sensitive data in cloud environments through encryption, data loss prevention, access controls, and data classification across cloud services.",
+            "players": [
+              {"name": "Varonis", "role": "Data security platform providing visibility and protection for sensitive data across cloud and SaaS"},
+              {"name": "Thales (CipherTrust)", "role": "Provides cloud encryption, key management, and data protection across multi-cloud environments"},
+              {"name": "Fortanix", "role": "Confidential computing and key management platform securing data in use across clouds"},
+              {"name": "BigID", "role": "AI-driven data discovery and classification platform for cloud privacy and security compliance"}
+            ]
+          },
+          {
+            "name": "Compliance & Posture Management",
+            "description": "Continuous monitoring of cloud configurations against security benchmarks (CIS, SOC 2, PCI-DSS) with automated remediation of misconfigurations.",
+            "players": [
+              {"name": "Wiz", "role": "CNAPP platform combining CSPM, vulnerability management, and compliance across multi-cloud", "alsoIn": ["Workload Protection"]},
+              {"name": "Palo Alto Networks (Prisma Cloud)", "role": "Comprehensive cloud security posture management with auto-remediation capabilities"},
+              {"name": "Lacework", "role": "Cloud security platform using anomaly detection for compliance monitoring and threat detection"},
+              {"name": "Snyk", "role": "Developer security platform scanning code, containers, and IaC for security issues before deployment"}
+            ]
+          },
+          {
+            "name": "Incident Response",
+            "description": "Cloud-specific incident detection, investigation, and remediation including forensic analysis of compromised cloud accounts and workloads.",
+            "players": [
+              {"name": "CrowdStrike (Falcon Complete)", "role": "Managed cloud threat hunting and incident response across AWS, Azure, and GCP environments"},
+              {"name": "Mandiant (Google Cloud)", "role": "Expert incident response services for cloud breaches with deep adversary intelligence"},
+              {"name": "Mitiga", "role": "Cloud incident response platform providing automated investigation of cloud and SaaS breaches"},
+              {"name": "Cado Security", "role": "Cloud forensics and incident response platform automating evidence collection across cloud environments"}
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "ecommerce_retail",
+      "name": "E-Commerce & Retail Tech",
+      "keywords": ["ecommerce", "e-commerce", "retail", "amazon", "shopify", "etsy", "walmart", "marketplace", "fulfillment", "logistics", "dtc", "direct to consumer", "omnichannel"],
+      "broad": {
+        "stages": [
+          {
+            "name": "Sourcing & Supply Chain",
+            "description": "Product sourcing, supplier management, and supply chain orchestration from manufacturers to distribution centers for retail and e-commerce operations.",
+            "players": [
+              {"name": "Li & Fung", "role": "Global supply chain orchestrator connecting brands with manufacturers across 40+ countries"},
+              {"name": "Flexport", "role": "Tech-enabled freight forwarder and supply chain platform for e-commerce and retail importers"},
+              {"name": "Coupa Software", "role": "Business spend management platform used by retailers for procurement and supply chain visibility"},
+              {"name": "TradeGlobal", "role": "End-to-end supply chain and fulfillment partner for direct-to-consumer and retail brands"}
+            ]
+          },
+          {
+            "name": "Platform & Marketplace",
+            "description": "Digital storefronts, marketplaces, and commerce platforms where consumers browse, compare, and purchase products online.",
+            "players": [
+              {"name": "Amazon", "role": "World's largest e-commerce marketplace and fulfillment platform with 300+ million active customers"},
+              {"name": "Shopify", "role": "Leading e-commerce platform enabling millions of merchants to build and operate online stores"},
+              {"name": "Walmart", "role": "Largest brick-and-mortar retailer with rapidly growing e-commerce marketplace and omnichannel services", "alsoIn": ["Fulfillment & Warehousing"]},
+              {"name": "Etsy", "role": "Marketplace for handmade, vintage, and unique goods connecting millions of creative sellers and buyers"},
+              {"name": "MercadoLibre", "role": "Largest e-commerce platform in Latin America with integrated payments (Mercado Pago) and logistics"}
+            ]
+          },
+          {
+            "name": "Fulfillment & Warehousing",
+            "description": "Warehouse operations, inventory management, order picking, packing, and preparation for shipment including robotics-powered automation.",
+            "players": [
+              {"name": "Amazon (FBA)", "role": "Fulfillment by Amazon handles storage, picking, packing, and shipping for millions of sellers"},
+              {"name": "Shopify Fulfillment Network", "role": "Distributed fulfillment network offering fast shipping for Shopify merchants"},
+              {"name": "GXO Logistics", "role": "Largest pure-play contract logistics company operating automated warehouses for major retailers"},
+              {"name": "Symbotic", "role": "AI-powered warehouse robotics company deploying autonomous systems for Walmart and other retailers"}
+            ]
+          },
+          {
+            "name": "Delivery & Last Mile",
+            "description": "Transportation of packages from fulfillment centers to customers' doorsteps, including last-mile delivery networks, parcel carriers, and route optimization.",
+            "players": [
+              {"name": "UPS", "role": "Delivers 25+ million packages daily with extensive US and global parcel delivery network"},
+              {"name": "FedEx", "role": "Major parcel carrier providing express, ground, and e-commerce delivery services worldwide"},
+              {"name": "Amazon Logistics", "role": "Amazon's internal delivery network handling over half of its own package deliveries in the US"},
+              {"name": "DHL", "role": "Largest international logistics company providing cross-border e-commerce delivery globally"}
+            ]
+          },
+          {
+            "name": "Customer Experience",
+            "description": "Post-purchase experience including customer service, returns management, reviews, loyalty programs, and personalized marketing.",
+            "players": [
+              {"name": "Salesforce (Commerce Cloud)", "role": "Unified commerce and CRM platform powering personalized shopping experiences for major brands"},
+              {"name": "Zendesk", "role": "Customer service platform handling support tickets and engagement for e-commerce companies"},
+              {"name": "Narvar", "role": "Post-purchase experience platform managing order tracking, delivery updates, and returns for retailers"},
+              {"name": "Yotpo", "role": "E-commerce marketing platform for reviews, loyalty programs, and SMS marketing for DTC brands"}
+            ]
+          }
+        ]
+      },
+      "narrow": {
+        "focus": "Direct-to-Consumer",
+        "stages": [
+          {
+            "name": "Product Design & Development",
+            "description": "Designing and developing consumer products in-house or with manufacturing partners, including prototyping, material sourcing, and production planning.",
+            "players": [
+              {"name": "Warby Parker", "role": "DTC eyewear brand that designs frames in-house and controls the entire customer experience"},
+              {"name": "Allbirds", "role": "DTC sustainable footwear brand designing products with novel materials like merino wool and sugarcane"},
+              {"name": "Casper", "role": "DTC mattress brand that disrupted traditional retail with direct online sales and simplified SKUs"},
+              {"name": "Peloton", "role": "Designs and sells connected fitness hardware and subscription content directly to consumers"}
+            ]
+          },
+          {
+            "name": "Manufacturing",
+            "description": "Contract or owned manufacturing facilities producing DTC brand products with quality control and sustainable production practices.",
+            "players": [
+              {"name": "Flex Ltd.", "role": "Global contract manufacturer producing consumer electronics and products for DTC brands"},
+              {"name": "Jabil", "role": "Contract manufacturer providing design, production, and supply chain services for consumer brands"},
+              {"name": "On Running", "role": "DTC performance footwear brand managing its own manufacturing relationships in Vietnam and Indonesia"},
+              {"name": "Shein", "role": "Fast-fashion DTC giant leveraging a real-time, demand-driven manufacturing network in China"}
+            ]
+          },
+          {
+            "name": "E-Commerce Platform",
+            "description": "Online storefronts and commerce technology powering the DTC brand's website, mobile app, payments, and product catalog.",
+            "players": [
+              {"name": "Shopify", "role": "Platform of choice for most DTC brands offering storefront, payments, and business management tools"},
+              {"name": "BigCommerce", "role": "Enterprise e-commerce platform powering mid-market and growing DTC brand storefronts"},
+              {"name": "Salesforce Commerce Cloud", "role": "Enterprise DTC platform used by large brands like Adidas and Puma for direct online sales"},
+              {"name": "Recharge", "role": "Subscription management platform enabling DTC brands to offer recurring purchase models"}
+            ]
+          },
+          {
+            "name": "Digital Marketing & Acquisition",
+            "description": "Paid advertising, social media marketing, influencer partnerships, SEO, and content marketing that drive customer acquisition for DTC brands.",
+            "players": [
+              {"name": "Meta (Facebook/Instagram)", "role": "Dominant paid advertising platform for DTC brands with targeted social media ad capabilities"},
+              {"name": "Google Ads", "role": "Search and shopping ad platform driving high-intent customer acquisition for DTC brands"},
+              {"name": "Klaviyo", "role": "Email and SMS marketing automation platform purpose-built for DTC and e-commerce brands"},
+              {"name": "TikTok Shop", "role": "Rapidly growing social commerce platform where DTC brands sell directly through short-form video"}
+            ]
+          },
+          {
+            "name": "Order Management",
+            "description": "Systems that manage order processing, inventory allocation, payment capture, and routing orders to the optimal fulfillment location.",
+            "players": [
+              {"name": "Shopify (Order Management)", "role": "Integrated order management routing orders across multiple fulfillment locations for DTC merchants"},
+              {"name": "ShipBob", "role": "Cloud-based order management and fulfillment platform built specifically for DTC e-commerce brands"},
+              {"name": "Ordoro", "role": "Inventory and order management platform for growing DTC brands managing multi-channel sales"},
+              {"name": "Celigo", "role": "Integration platform connecting e-commerce storefronts with ERP, WMS, and fulfillment systems"}
+            ]
+          },
+          {
+            "name": "Fulfillment & 3PL",
+            "description": "Third-party logistics partners that store inventory, pick and pack orders, and prepare shipments on behalf of DTC brands.",
+            "players": [
+              {"name": "ShipBob", "role": "DTC-focused 3PL with distributed fulfillment centers offering 2-day shipping across the US"},
+              {"name": "Deliverr (Shopify)", "role": "Fast fulfillment network acquired by Shopify to power affordable 2-day delivery for merchants"},
+              {"name": "Fulfillment by Amazon (FBA)", "role": "Enables DTC brands to leverage Amazon's fulfillment network while selling on their own storefront"},
+              {"name": "Red Stag Fulfillment", "role": "Boutique 3PL specializing in heavy, large, or high-value DTC products with low error rates"}
+            ]
+          },
+          {
+            "name": "Last-Mile Delivery",
+            "description": "Final transportation of DTC orders from fulfillment centers to customer doorsteps through parcel carriers and regional delivery services.",
+            "players": [
+              {"name": "UPS", "role": "Primary parcel carrier for DTC brands offering reliable nationwide residential delivery"},
+              {"name": "FedEx", "role": "Major carrier providing ground, express, and SmartPost options for DTC shipments"},
+              {"name": "USPS", "role": "Most affordable last-mile carrier for lightweight DTC packages with universal residential reach"},
+              {"name": "OnTrac", "role": "Regional parcel carrier offering faster, lower-cost delivery in western US markets for DTC brands"}
+            ]
+          },
+          {
+            "name": "Returns & Customer Retention",
+            "description": "Returns processing, exchanges, customer service, and loyalty programs that drive repeat purchases and lifetime value for DTC brands.",
+            "players": [
+              {"name": "Loop Returns", "role": "Returns management platform helping DTC brands convert returns into exchanges and store credit"},
+              {"name": "Gorgias", "role": "Helpdesk platform built for e-commerce providing automated customer support for DTC brands"},
+              {"name": "Yotpo", "role": "Customer retention platform offering reviews, loyalty, referrals, and SMS for DTC brands"},
+              {"name": "Happy Returns (PayPal)", "role": "Provides box-free, in-person return drop-off network for DTC brands at 10,000+ locations"}
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "cloud_computing",
+      "name": "Cloud Computing & SaaS",
+      "keywords": ["cloud", "saas", "aws", "azure", "google cloud", "iaas", "paas", "software as a service", "devops", "kubernetes", "serverless", "microservices", "snowflake", "datadog"],
+      "broad": {
+        "stages": [
+          {
+            "name": "Hardware & Infrastructure",
+            "description": "Physical servers, networking equipment, storage systems, and data center facilities that form the foundation of cloud computing.",
+            "players": [
+              {"name": "NVIDIA", "role": "Dominant supplier of GPUs for AI/ML cloud workloads driving massive data center revenue growth"},
+              {"name": "Intel", "role": "Major supplier of Xeon server CPUs powering the majority of cloud data center compute"},
+              {"name": "Arista Networks", "role": "Leading data center networking equipment provider for cloud hyperscalers and enterprises"},
+              {"name": "Equinix", "role": "World's largest data center REIT operating 260+ facilities across 70+ metros globally"},
+              {"name": "Dell Technologies", "role": "Major server and storage hardware supplier for enterprise and cloud data centers"}
+            ]
+          },
+          {
+            "name": "Cloud Platforms (IaaS/PaaS)",
+            "description": "Core cloud computing platforms providing virtualized compute, storage, networking, and platform services on a pay-as-you-go basis.",
+            "players": [
+              {"name": "Amazon Web Services (AWS)", "role": "Largest cloud platform with 31% market share offering 200+ services across compute, storage, and AI"},
+              {"name": "Microsoft Azure", "role": "Second-largest cloud platform tightly integrated with Microsoft enterprise software ecosystem"},
+              {"name": "Google Cloud Platform", "role": "Third-largest cloud provider strong in data analytics, AI/ML, and Kubernetes-native services"},
+              {"name": "Oracle Cloud", "role": "Fast-growing cloud platform with strong database heritage and competitive AI infrastructure pricing"}
+            ]
+          },
+          {
+            "name": "Development Tools & DevOps",
+            "description": "Software development platforms, CI/CD pipelines, monitoring tools, and infrastructure-as-code that enable cloud-native application development.",
+            "players": [
+              {"name": "GitHub (Microsoft)", "role": "Largest code hosting platform with 100M+ developers, Copilot AI, and Actions CI/CD"},
+              {"name": "GitLab", "role": "Integrated DevSecOps platform providing source control, CI/CD, and security scanning"},
+              {"name": "HashiCorp", "role": "Provides Terraform, Vault, and Consul infrastructure automation tools used across cloud environments"},
+              {"name": "Datadog", "role": "Leading cloud monitoring and observability platform for infrastructure, APM, and log management"},
+              {"name": "Docker", "role": "Pioneered containerization technology fundamental to modern cloud-native application development"}
+            ]
+          },
+          {
+            "name": "SaaS Applications",
+            "description": "Cloud-delivered software applications serving every business function from CRM and ERP to collaboration, analytics, and vertical solutions.",
+            "players": [
+              {"name": "Microsoft 365", "role": "Dominant cloud productivity suite with Teams, Office, and SharePoint serving 400M+ paid seats"},
+              {"name": "Salesforce", "role": "Largest CRM platform powering sales, service, marketing, and analytics for enterprises worldwide"},
+              {"name": "ServiceNow", "role": "Enterprise workflow automation platform for IT, HR, and customer service used by most Fortune 500"},
+              {"name": "Workday", "role": "Leading cloud HCM and financial management platform for large enterprises and institutions"},
+              {"name": "Snowflake", "role": "Cloud data platform enabling data warehousing, sharing, and analytics across multi-cloud environments"}
+            ]
+          },
+          {
+            "name": "End Users & Consumers",
+            "description": "Enterprises, SMBs, developers, and consumers who use cloud-delivered applications and services in their daily work and personal lives.",
+            "players": [
+              {"name": "Accenture", "role": "Largest IT services firm helping enterprises migrate to cloud and adopt SaaS applications"},
+              {"name": "Deloitte", "role": "Major consulting firm advising enterprises on cloud strategy, implementation, and digital transformation"},
+              {"name": "CDW", "role": "Technology solutions provider helping mid-market businesses procure and implement cloud services"},
+              {"name": "HCLTech", "role": "Global IT services company managing cloud infrastructure and SaaS implementations for enterprises"}
+            ]
+          }
+        ]
+      },
+      "narrow": {
+        "focus": "Enterprise SaaS",
+        "stages": [
+          {
+            "name": "Cloud Infrastructure",
+            "description": "The underlying IaaS layer providing compute, storage, and networking on which enterprise SaaS applications are built and deployed.",
+            "players": [
+              {"name": "Amazon Web Services", "role": "Hosts the majority of SaaS applications with comprehensive IaaS and managed services"},
+              {"name": "Microsoft Azure", "role": "Preferred cloud for enterprise SaaS vendors building on .NET and seeking Microsoft ecosystem integration"},
+              {"name": "Google Cloud", "role": "Growing SaaS hosting platform with strong managed Kubernetes and data analytics services"},
+              {"name": "MongoDB", "role": "Cloud database platform (Atlas) used by thousands of SaaS applications for data persistence"}
+            ]
+          },
+          {
+            "name": "Platform Services",
+            "description": "Managed databases, authentication, messaging, and serverless compute services that SaaS developers use to build applications faster.",
+            "players": [
+              {"name": "Twilio", "role": "Cloud communications API platform enabling SaaS apps to embed messaging, voice, and email"},
+              {"name": "Auth0 (Okta)", "role": "Identity-as-a-service platform providing authentication and authorization for SaaS applications"},
+              {"name": "Confluent", "role": "Cloud-native event streaming platform (Kafka) powering real-time data pipelines in SaaS products"},
+              {"name": "Elastic", "role": "Search and observability platform used by SaaS applications for log analytics and application search"}
+            ]
+          },
+          {
+            "name": "Development Frameworks",
+            "description": "Application frameworks, low-code platforms, and development tools that accelerate SaaS product creation and iteration cycles.",
+            "players": [
+              {"name": "Vercel", "role": "Frontend cloud platform hosting Next.js SaaS applications with edge deployment and DX focus"},
+              {"name": "Retool", "role": "Low-code platform enabling SaaS companies to rapidly build internal tools and admin panels"},
+              {"name": "Supabase", "role": "Open-source Firebase alternative providing backend-as-a-service for SaaS applications"},
+              {"name": "LaunchDarkly", "role": "Feature management platform enabling SaaS teams to safely release and test features with flags"}
+            ]
+          },
+          {
+            "name": "SaaS Applications",
+            "description": "The enterprise SaaS products themselves spanning CRM, ERP, HCM, security, analytics, and vertical-specific cloud software.",
+            "players": [
+              {"name": "Salesforce", "role": "Pioneer and leader in cloud CRM with expanding platform across sales, service, marketing, and AI"},
+              {"name": "ServiceNow", "role": "Enterprise workflow platform automating IT, HR, and customer service for Fortune 500 companies"},
+              {"name": "Workday", "role": "Cloud-native HCM and financial management used by 60%+ of the Fortune 500"},
+              {"name": "HubSpot", "role": "Integrated CRM, marketing, sales, and service platform for small and mid-market businesses"},
+              {"name": "Atlassian", "role": "Collaboration and developer tools (Jira, Confluence) used by millions of software teams"}
+            ]
+          },
+          {
+            "name": "Integration & Middleware",
+            "description": "iPaaS, API management, and data integration platforms that connect enterprise SaaS applications into unified workflows.",
+            "players": [
+              {"name": "MuleSoft (Salesforce)", "role": "Leading API management and integration platform connecting SaaS, on-prem, and legacy systems"},
+              {"name": "Workato", "role": "Enterprise automation platform enabling no-code integration between 1,000+ SaaS applications"},
+              {"name": "Boomi", "role": "Integration platform-as-a-service connecting enterprise SaaS, cloud, and on-premise applications"},
+              {"name": "Informatica", "role": "Enterprise data integration and management platform for SaaS and hybrid cloud environments"}
+            ]
+          },
+          {
+            "name": "Customer Success & Analytics",
+            "description": "Tools and practices that help SaaS companies maximize customer retention, expansion, and lifetime value through data-driven engagement.",
+            "players": [
+              {"name": "Gainsight", "role": "Leading customer success platform helping SaaS companies reduce churn and drive expansion revenue"},
+              {"name": "Amplitude", "role": "Digital analytics platform enabling SaaS companies to understand product usage and optimize retention"},
+              {"name": "Pendo", "role": "Product experience platform providing in-app guidance and analytics for SaaS product teams"},
+              {"name": "ChurnZero", "role": "Customer success software providing health scores and automation for SaaS retention teams"}
+            ]
+          },
+          {
+            "name": "End Users & Enterprise Buyers",
+            "description": "CIOs, IT departments, and business units that evaluate, purchase, implement, and use enterprise SaaS across their organizations.",
+            "players": [
+              {"name": "Gartner", "role": "Leading IT research firm whose Magic Quadrant reports heavily influence enterprise SaaS purchasing decisions"},
+              {"name": "Accenture", "role": "Largest systems integrator helping enterprises implement and customize SaaS platforms"},
+              {"name": "G2", "role": "Largest B2B software review marketplace where enterprises research and compare SaaS products"},
+              {"name": "Zylo", "role": "SaaS management platform helping enterprises discover, optimize, and govern their SaaS portfolio"}
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "aerospace_defense",
+      "name": "Aerospace & Defense",
+      "keywords": ["aerospace", "defense", "military", "lockheed", "boeing", "raytheon", "northrop", "space", "satellite", "fighter jet", "missile", "spacex", "rocket"],
+      "broad": {
+        "stages": [
+          {
+            "name": "Materials & Advanced Manufacturing",
+            "description": "Production of specialized materials including titanium alloys, carbon fiber composites, ceramics, and additively manufactured components for aerospace applications.",
+            "players": [
+              {"name": "Hexcel", "role": "Leading manufacturer of carbon fiber and composite materials for aircraft structures and engines"},
+              {"name": "Howmet Aerospace", "role": "Produces engineered fasteners, titanium structures, and forged components for aerospace platforms"},
+              {"name": "Spirit AeroSystems", "role": "World's largest independent aerostructures manufacturer producing fuselages, pylons, and wing components"},
+              {"name": "Carpenter Technology", "role": "Specialty alloys manufacturer providing nickel and titanium superalloys for jet engines"}
+            ]
+          },
+          {
+            "name": "Components & Subsystems",
+            "description": "Design and manufacturing of engines, avionics, sensors, actuators, and other critical subsystems that are integrated into complete aerospace platforms.",
+            "players": [
+              {"name": "RTX (Raytheon/Pratt & Whitney)", "role": "Major defense contractor and jet engine manufacturer powering military and commercial aircraft"},
+              {"name": "GE Aerospace", "role": "World's largest jet engine manufacturer producing LEAP and GE9X engines for commercial aviation"},
+              {"name": "L3Harris Technologies", "role": "Major defense electronics provider producing sensors, radios, and ISR systems for military platforms"},
+              {"name": "Honeywell Aerospace", "role": "Produces avionics, auxiliary power units, and flight management systems for commercial and military aircraft"}
+            ]
+          },
+          {
+            "name": "Systems Integration",
+            "description": "Assembly of complete aircraft, spacecraft, missiles, and defense systems by prime contractors integrating thousands of components from supply chain partners.",
+            "players": [
+              {"name": "Lockheed Martin", "role": "World's largest defense contractor producing F-35, Sikorsky helicopters, and space systems"},
+              {"name": "Boeing", "role": "Leading commercial aircraft manufacturer and major defense/space prime contractor"},
+              {"name": "Northrop Grumman", "role": "Major defense prime building B-21 stealth bomber, autonomous systems, and space systems"},
+              {"name": "Airbus", "role": "World's largest commercial aircraft manufacturer and major European defense contractor"},
+              {"name": "General Dynamics", "role": "Builds Gulfstream business jets, submarines, armored vehicles, and IT systems for defense"}
+            ]
+          },
+          {
+            "name": "Testing & Certification",
+            "description": "Rigorous testing, qualification, and regulatory certification processes ensuring aerospace systems meet safety, performance, and reliability requirements.",
+            "players": [
+              {"name": "Curtiss-Wright", "role": "Provides testing equipment, data acquisition, and qualification services for defense and aerospace"},
+              {"name": "National Instruments (Emerson)", "role": "Manufactures test and measurement systems used in aerospace hardware-in-the-loop testing"},
+              {"name": "Heico", "role": "FAA-approved manufacturer of replacement aerospace components with certified testing programs"},
+              {"name": "TransDigm", "role": "Produces highly engineered, FAA-certified aerospace components with proprietary designs"}
+            ]
+          },
+          {
+            "name": "Operations & Deployment",
+            "description": "Military operations, commercial airline operations, and space mission execution using deployed aerospace platforms and systems.",
+            "players": [
+              {"name": "United Airlines", "role": "One of the world's largest airlines operating a fleet of 900+ Boeing and Airbus aircraft"},
+              {"name": "Delta Air Lines", "role": "Major US airline with one of the most profitable operations in commercial aviation"},
+              {"name": "SpaceX", "role": "Operates the world's most active launch vehicle (Falcon 9) and Starlink satellite constellation"},
+              {"name": "Leidos", "role": "Major defense IT and services contractor supporting military operations and intelligence systems"}
+            ]
+          },
+          {
+            "name": "Maintenance, Repair & Overhaul",
+            "description": "Ongoing maintenance, repair, upgrades, and lifecycle management of aerospace systems that can operate for decades with proper servicing.",
+            "players": [
+              {"name": "GE Aerospace (Services)", "role": "Generates majority of revenue from long-term engine maintenance and overhaul contracts"},
+              {"name": "Heico", "role": "Largest independent supplier of FAA-approved aircraft replacement parts and MRO components", "alsoIn": ["Testing & Certification"]},
+              {"name": "AAR Corp", "role": "Independent MRO services provider offering airframe, engine, and component maintenance"},
+              {"name": "ST Engineering", "role": "Major Asian MRO provider servicing commercial and military aircraft globally"}
+            ]
+          }
+        ]
+      },
+      "narrow": {
+        "focus": "Commercial Space Launch",
+        "stages": [
+          {
+            "name": "Propulsion R&D",
+            "description": "Research and development of rocket engines, propellant systems, and advanced propulsion technologies including reusable and methane-fueled engines.",
+            "players": [
+              {"name": "SpaceX", "role": "Developed reusable Merlin and Raptor engines, the most flight-proven rocket engines in history"},
+              {"name": "Blue Origin", "role": "Develops BE-4 methane engine powering both New Glenn and ULA's Vulcan launch vehicle"},
+              {"name": "Aerojet Rocketdyne (L3Harris)", "role": "Major US rocket engine manufacturer producing RS-25 for SLS and RL-10 upper stage engines"},
+              {"name": "Rocket Lab", "role": "Developed Rutherford electric pump-fed engine and Archimedes engine for medium-lift Neutron vehicle"}
+            ]
+          },
+          {
+            "name": "Vehicle Manufacturing",
+            "description": "Design and assembly of launch vehicles including structures, avionics, guidance systems, and integration of propulsion with payload delivery systems.",
+            "players": [
+              {"name": "SpaceX", "role": "Manufactures Falcon 9, Falcon Heavy, and the massive Starship super heavy-lift vehicle"},
+              {"name": "United Launch Alliance (ULA)", "role": "Boeing-Lockheed JV manufacturing Vulcan Centaur rockets for national security and commercial missions"},
+              {"name": "Rocket Lab", "role": "Produces Electron small-sat launcher and developing Neutron medium-lift reusable vehicle"},
+              {"name": "Relativity Space", "role": "Building Terran R rocket using the world's largest metal 3D printers for rapid vehicle production"}
+            ]
+          },
+          {
+            "name": "Launch Infrastructure",
+            "description": "Spaceports, launch pads, integration facilities, and ground support equipment required to process and launch rockets.",
+            "players": [
+              {"name": "SpaceX", "role": "Operates launch facilities at Kennedy Space Center, Vandenberg, and Starbase in Boca Chica, TX"},
+              {"name": "NASA (KSC)", "role": "Provides Kennedy Space Center launch infrastructure leased to commercial launch operators"},
+              {"name": "Rocket Lab", "role": "Operates private launch complexes in New Zealand and Virginia for high-frequency launches"},
+              {"name": "Space Florida", "role": "State agency developing commercial spaceport infrastructure at Cape Canaveral and Cecil Field"}
+            ]
+          },
+          {
+            "name": "Mission Operations",
+            "description": "Launch countdown, flight operations, telemetry monitoring, and real-time decision-making during ascent, orbit insertion, and booster recovery.",
+            "players": [
+              {"name": "SpaceX", "role": "Operates autonomous flight termination and drone ship booster recovery for routine launch cadence"},
+              {"name": "Firefly Aerospace", "role": "Conducts launch operations for Alpha small-sat rocket from Vandenberg Space Force Base"},
+              {"name": "KSAT (Kongsberg Satellite Services)", "role": "Provides ground station network for telemetry, tracking, and command during launch operations"},
+              {"name": "AGI (Ansys)", "role": "Provides Systems Tool Kit (STK) software for mission planning, orbital analysis, and operations"}
+            ]
+          },
+          {
+            "name": "Satellite Deployment",
+            "description": "Delivery and deployment of satellite payloads into precise orbits, including rideshare missions, constellation deployment, and orbital transfer.",
+            "players": [
+              {"name": "SpaceX (Starlink)", "role": "Deploys its own Starlink mega-constellation while launching customer satellites on Falcon 9"},
+              {"name": "Arianespace", "role": "European launch operator deploying satellites with Ariane 6 and Vega-C rockets"},
+              {"name": "Planet Labs", "role": "Operates the largest constellation of Earth-imaging satellites launched via rideshare missions"},
+              {"name": "D-Orbit", "role": "Provides orbital transfer vehicles for precise satellite deployment and last-mile delivery in space"}
+            ]
+          },
+          {
+            "name": "Ground Systems & Communications",
+            "description": "Ground station networks, satellite communication systems, and mission control infrastructure enabling data downlink and satellite command.",
+            "players": [
+              {"name": "Viasat", "role": "Operates satellite communication ground networks and builds broadband satellite systems"},
+              {"name": "AWS Ground Station", "role": "Cloud-based satellite ground station service enabling on-demand satellite data downlink"},
+              {"name": "SES", "role": "Major satellite operator with ground infrastructure supporting satellite fleet management globally"},
+              {"name": "Kratos Defense", "role": "Provides satellite ground system equipment, signal processing, and command-and-control technology"}
+            ]
+          },
+          {
+            "name": "Data Services & Applications",
+            "description": "Downstream services leveraging satellite data for Earth observation, communications, positioning, and internet connectivity applications.",
+            "players": [
+              {"name": "SpaceX (Starlink)", "role": "Delivers satellite broadband internet service to 3+ million subscribers in 70+ countries", "alsoIn": ["Satellite Deployment"]},
+              {"name": "Planet Labs", "role": "Provides daily satellite imagery analytics for agriculture, defense, and environmental monitoring", "alsoIn": ["Satellite Deployment"]},
+              {"name": "Maxar Technologies", "role": "Provides high-resolution satellite imagery and geospatial analytics for government and commercial use"},
+              {"name": "Iridium Communications", "role": "Operates the only truly global satellite communications network with 66 crosslinked LEO satellites"}
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "telecommunications",
+      "name": "Telecommunications",
+      "keywords": ["telecom", "telecommunications", "5g", "wireless", "broadband", "at&t", "verizon", "t-mobile", "fiber", "tower", "spectrum", "ericsson", "nokia", "network"],
+      "broad": {
+        "stages": [
+          {
+            "name": "Infrastructure & Towers",
+            "description": "Physical infrastructure including cell towers, fiber optic networks, undersea cables, and data centers that form the backbone of telecommunications.",
+            "players": [
+              {"name": "American Tower", "role": "Largest global cell tower REIT with 225,000+ towers across 25 countries"},
+              {"name": "Crown Castle", "role": "Largest US cell tower company also operating 85,000+ route miles of fiber and small cells"},
+              {"name": "SBA Communications", "role": "Major US cell tower operator with 39,000+ towers and growing international presence"},
+              {"name": "Lumen Technologies", "role": "Operates one of the largest fiber networks in the world connecting enterprises and hyperscalers"}
+            ]
+          },
+          {
+            "name": "Equipment & Technology",
+            "description": "Manufacturing of network equipment including base stations, routers, switches, optical transport, and radio access network (RAN) hardware.",
+            "players": [
+              {"name": "Ericsson", "role": "Leading 5G RAN equipment supplier providing mobile network infrastructure to carriers worldwide"},
+              {"name": "Nokia", "role": "Major telecom equipment vendor offering 5G RAN, core network, and optical networking solutions"},
+              {"name": "Cisco Systems", "role": "Dominant networking equipment company providing routers, switches, and SD-WAN for carriers and enterprises"},
+              {"name": "Ciena", "role": "Leading optical networking equipment provider enabling high-capacity fiber backbone networks"},
+              {"name": "Samsung Networks", "role": "Growing 5G RAN vendor winning contracts with major US carriers and expanding globally"}
+            ]
+          },
+          {
+            "name": "Network Operations",
+            "description": "Deployment, management, and optimization of wireless and wireline networks to deliver reliable connectivity across coverage areas.",
+            "players": [
+              {"name": "AT&T", "role": "Largest US telecom by revenue operating nationwide wireless, fiber, and enterprise networks"},
+              {"name": "Verizon", "role": "Leading US wireless carrier known for network quality with growing 5G and fiber deployments"},
+              {"name": "T-Mobile", "role": "Fastest-growing US wireless carrier with the largest 5G network by coverage area"},
+              {"name": "Deutsche Telekom", "role": "Europe's largest telecom operator and majority owner of T-Mobile US"}
+            ]
+          },
+          {
+            "name": "Service Delivery",
+            "description": "Packaging and delivering connectivity services including mobile plans, broadband internet, enterprise networking, and managed services to customers.",
+            "players": [
+              {"name": "Comcast (Xfinity)", "role": "Largest US broadband provider delivering internet, TV, and phone services via cable and fiber"},
+              {"name": "Charter (Spectrum)", "role": "Second-largest US cable operator providing broadband, TV, and mobile services"},
+              {"name": "T-Mobile", "role": "Consumer wireless and fixed wireless home internet services to 120+ million customers", "alsoIn": ["Network Operations"]},
+              {"name": "Amdocs", "role": "Leading BSS/OSS vendor providing billing, CRM, and service delivery software to global carriers"}
+            ]
+          },
+          {
+            "name": "End Users",
+            "description": "Consumer, enterprise, and IoT customers who use telecommunications services for voice, data, video, and connected device connectivity.",
+            "players": [
+              {"name": "Apple", "role": "iPhone is the single largest driver of wireless subscriber upgrades and data consumption"},
+              {"name": "Samsung Electronics", "role": "Second-largest smartphone manufacturer driving wireless plan adoption globally"},
+              {"name": "Zoom Video Communications", "role": "Major consumer of telecom bandwidth for video conferencing used by millions of businesses"},
+              {"name": "Amazon (Ring/Alexa)", "role": "IoT devices and smart home products driving consumer broadband demand and connected device growth"}
+            ]
+          }
+        ]
+      },
+      "narrow": {
+        "focus": "5G Networks",
+        "stages": [
+          {
+            "name": "Spectrum Licensing",
+            "description": "Acquisition of radio frequency spectrum through government auctions and regulatory processes, the foundational scarce resource for 5G wireless networks.",
+            "players": [
+              {"name": "T-Mobile", "role": "Acquired the largest mid-band 5G spectrum holdings in the US through Sprint merger and auctions"},
+              {"name": "AT&T", "role": "Holds extensive low-band, mid-band, and C-band spectrum licenses for 5G deployment"},
+              {"name": "Verizon", "role": "Invested $45B+ in C-band and mmWave spectrum to power its 5G Ultra Wideband network"},
+              {"name": "Dish Network", "role": "Holds significant spectrum licenses and is building the first greenfield 5G Open RAN network in the US"}
+            ]
+          },
+          {
+            "name": "RAN Equipment",
+            "description": "Manufacturing and deployment of 5G radio access network equipment including massive MIMO antennas, small cells, and Open RAN components.",
+            "players": [
+              {"name": "Ericsson", "role": "Leading 5G RAN supplier with massive MIMO radios deployed across all major global carriers"},
+              {"name": "Nokia", "role": "Major 5G RAN vendor with AirScale platform serving carriers in the US, Europe, and Asia"},
+              {"name": "Samsung Networks", "role": "Gained significant US 5G RAN market share with Verizon and other carrier deployments"},
+              {"name": "Mavenir", "role": "Leading Open RAN software vendor enabling disaggregated 5G network architectures"}
+            ]
+          },
+          {
+            "name": "Core Network",
+            "description": "5G standalone core network software providing network functions like authentication, session management, and network slicing in cloud-native architecture.",
+            "players": [
+              {"name": "Ericsson", "role": "Provides cloud-native 5G core network software with dual-mode 4G/5G capabilities", "alsoIn": ["RAN Equipment"]},
+              {"name": "Nokia", "role": "Offers 5G core network solutions with advanced network slicing and automation capabilities", "alsoIn": ["RAN Equipment"]},
+              {"name": "Cisco Systems", "role": "Provides 5G packet core, routing, and security infrastructure for carrier core networks"},
+              {"name": "Affirmed Networks (Microsoft)", "role": "Cloud-native mobile core network acquired by Microsoft for Azure-based 5G core deployments"}
+            ]
+          },
+          {
+            "name": "Edge Computing",
+            "description": "Multi-access edge computing (MEC) infrastructure deployed at cell tower sites and carrier facilities to enable ultra-low-latency 5G applications.",
+            "players": [
+              {"name": "Amazon (AWS Wavelength)", "role": "Deploys AWS compute at carrier edge locations for ultra-low-latency 5G application hosting"},
+              {"name": "Microsoft (Azure Edge Zones)", "role": "Provides Azure compute at 5G network edge for enterprise and carrier applications"},
+              {"name": "Dell Technologies", "role": "Provides edge server hardware and solutions for MEC deployments at 5G cell sites"},
+              {"name": "Vapor IO", "role": "Builds edge data center infrastructure at the base of cell towers for 5G edge applications"}
+            ]
+          },
+          {
+            "name": "Network Deployment",
+            "description": "Physical construction and installation of 5G infrastructure including tower builds, small cell deployment, fiber backhaul, and network commissioning.",
+            "players": [
+              {"name": "MasTec", "role": "Largest US telecom infrastructure contractor building 5G towers and fiber for major carriers"},
+              {"name": "Dycom Industries", "role": "Specialty contractor installing fiber backhaul and wireless infrastructure for 5G deployments"},
+              {"name": "Crown Castle", "role": "Deploys small cells and fiber infrastructure critical for densified 5G urban networks"},
+              {"name": "Quanta Services", "role": "Major infrastructure contractor deploying 5G tower builds and fiber networks nationwide"}
+            ]
+          },
+          {
+            "name": "Enterprise & Consumer Services",
+            "description": "5G-enabled products and services including enhanced mobile broadband, fixed wireless access, private 5G networks, and IoT connectivity.",
+            "players": [
+              {"name": "T-Mobile", "role": "Leads in 5G consumer adoption and fixed wireless home internet using its extensive mid-band network"},
+              {"name": "Verizon (Business)", "role": "Sells private 5G networks and mobile edge compute solutions to enterprise customers"},
+              {"name": "AT&T (Business)", "role": "Deploys private 5G and FirstNet public safety networks for enterprise and government customers"},
+              {"name": "Qualcomm", "role": "Provides Snapdragon 5G modems and platforms enabling 5G in smartphones, PCs, and IoT devices"}
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

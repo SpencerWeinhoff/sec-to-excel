@@ -14,6 +14,7 @@ import xbrl_parser
 import html_parser
 import excel_builder
 import ppt_builder
+import value_chain_builder
 
 app = Flask(__name__)
 
@@ -21,6 +22,11 @@ app = Flask(__name__)
 _industry_data_path = os.path.join(os.path.dirname(__file__), "industry_data.json")
 with open(_industry_data_path, "r") as _f:
     _industry_data = json.load(_f)
+
+# Load value chain data at startup
+_vc_data_path = os.path.join(os.path.dirname(__file__), "value_chain_data.json")
+with open(_vc_data_path, "r") as _f:
+    _vc_data = json.load(_f)
 
 # In-memory cache for scanned tables (scan_id -> data)
 # So we don't have to re-fetch filings on generate
@@ -275,6 +281,76 @@ def api_landscape_generate():
         filepath, filename = ppt_builder.build_landscape_ppt(
             industry=industry,
             selected_sub_ids=sub_industry_ids if sub_industry_ids else None,
+        )
+
+        return send_file(
+            filepath,
+            as_attachment=True,
+            download_name=filename,
+            mimetype="application/vnd.openxmlformats-officedocument.presentationml.presentation",
+        )
+
+    except Exception as e:
+        traceback.print_exc()
+        return jsonify({"error": f"PPT generation failed: {str(e)}"}), 500
+
+
+# ── Value Chain routes ──
+
+@app.route("/value-chain")
+def value_chain():
+    return render_template("value_chain.html")
+
+
+@app.route("/api/value-chains")
+def api_value_chains():
+    """Return list of available value chains with summary info."""
+    result = []
+    for vc in _vc_data.get("value_chains", []):
+        broad_stages = len(vc.get("broad", {}).get("stages", []))
+        narrow = vc.get("narrow", {})
+        narrow_stages = len(narrow.get("stages", []))
+        result.append({
+            "id": vc["id"],
+            "name": vc["name"],
+            "keywords": vc.get("keywords", []),
+            "broad_stages": broad_stages,
+            "narrow_stages": narrow_stages,
+            "narrow_focus": narrow.get("focus", ""),
+        })
+    return jsonify({"value_chains": result})
+
+
+@app.route("/api/value-chain/generate", methods=["POST"])
+def api_value_chain_generate():
+    """Generate value chain PPT."""
+    data = request.get_json()
+    if not data:
+        return jsonify({"error": "No data provided"}), 400
+
+    chain_id = data.get("chain_id", "")
+    scope = data.get("scope", "broad")
+
+    if not chain_id:
+        return jsonify({"error": "Chain ID is required"}), 400
+
+    if scope not in ("broad", "narrow", "both"):
+        return jsonify({"error": "Invalid scope"}), 400
+
+    # Find the value chain
+    chain = None
+    for vc in _vc_data.get("value_chains", []):
+        if vc["id"] == chain_id:
+            chain = vc
+            break
+
+    if not chain:
+        return jsonify({"error": "Value chain not found"}), 404
+
+    try:
+        filepath, filename = value_chain_builder.build_value_chain_ppt(
+            value_chain=chain,
+            scope=scope,
         )
 
         return send_file(
